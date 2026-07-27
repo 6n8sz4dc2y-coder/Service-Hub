@@ -35,6 +35,58 @@ main{max-width:1440px;margin:auto;padding:27px 32px 50px}.section-head{display:f
 .kpi .value{font-size:24px;margin:7px 0 5px}
 .kpi .detail{min-height:35px}
 .load-notice{background:#fff7ed;border:1px solid #fed7aa;color:#9a3412;border-radius:10px;padding:10px 13px;margin-bottom:14px;font-size:13px}
+
+.headline-columns{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:14px;
+  margin-bottom:24px;
+}
+.headline-group{min-width:0}
+.headline-group .hero-card{
+  min-height:132px;
+  padding:17px 19px;
+  border:0;
+  color:#fff;
+  transition:background .2s ease,box-shadow .2s ease;
+}
+.headline-group .hero-card:before{display:none}
+.headline-group .hero-card .label,
+.headline-group .hero-card .value,
+.headline-group .hero-card .detail,
+.headline-group .hero-card .status{color:#fff}
+.performance-card.awaiting{background:linear-gradient(135deg,#173e69,#24629a)}
+.performance-card.performance-green{background:linear-gradient(135deg,#147a45,#21a35f)}
+.performance-card.performance-amber{background:linear-gradient(135deg,#b66408,#dd8b17)}
+.performance-card.performance-red{background:linear-gradient(135deg,#a92b27,#d84940)}
+.performance-card .value{font-size:31px;margin:10px 0 7px}
+.performance-card .status{margin-top:9px}
+.performance-card .dot{background:#fff}
+.mini-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:9px;
+  margin-top:9px;
+}
+.kpi.mini{
+  padding:11px 12px;
+  min-height:116px;
+  border-radius:12px;
+}
+.kpi.mini .label{font-size:10px;letter-spacing:.65px}
+.kpi.mini .value{font-size:22px;margin:7px 0 5px}
+.kpi.mini .detail{font-size:11px;min-height:30px;line-height:1.35}
+.kpi.mini .forecast{margin-top:3px}
+@media(max-width:1100px){
+  .headline-columns{grid-template-columns:1fr}
+  .mini-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+}
+@media(max-width:760px){
+  .mini-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:480px){
+  .mini-grid{grid-template-columns:1fr}
+}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script></head>
 <body>
@@ -58,21 +110,53 @@ main{max-width:1440px;margin:auto;padding:27px 32px 50px}.section-head{display:f
 <main><div class="load-notice" id="loadNotice">Upload the service workbook to populate the dashboard. Upload End of Day for Service GP and Parts GP.</div>
 <section id="dashboard">
 <div class="section-head"><div><h2>Management headlines</h2><p>Only the measures that need immediate management attention.</p></div><div class="period" id="periodLabel">July 2026 · Month to date</div></div>
-<div class="hero-grid">
-<div class="hero-card primary"><div class="label">Service GP run rate</div><div class="value" data-key="serviceGpRunRate">£64,480</div><div class="detail">Forecast month-end position</div><div class="status amber" data-status="serviceGpRunRate"><span class="dot"></span><span>Close to target</span></div></div>
-<div class="hero-card"><div class="label">CitNOW sent</div><div class="value" data-key="citnowSent">327</div><div class="detail" data-detail="citnowSent">Month to date · Forecast: 405</div><div class="status amber" data-status="citnowSent"><span class="dot"></span><span>Close to target</span></div></div>
-<div class="hero-card"><div class="label">Service-plan sales</div><div class="value" data-key="servicePlanSales">24</div><div class="detail" data-detail="servicePlanSales">24 from 96 opportunities · Forecast: 30</div><div class="status red" data-status="servicePlanSales"><span class="dot"></span><span>Below target</span></div></div>
+
+<div class="headline-columns">
+<div class="headline-group">
+<div class="hero-card performance-card awaiting" id="serviceHero">
+<div class="label">Service GP run rate</div>
+<div class="value" data-key="serviceGpRunRate">£0</div>
+<div class="detail" data-detail="serviceGpRunRate">Forecast month-end position</div>
+<div class="status"><span class="dot"></span><span id="serviceHeroStatus">Awaiting data</span></div>
 </div>
-<div class="secondary-grid">
-<div class="kpi"><div class="label">Service GP actual</div><div class="value" data-key="serviceGpActual">£52,000</div><div class="detail" data-detail="serviceGpActual">Month to date<span class="forecast">Forecast: £64,480</span></div></div>
-<div class="kpi"><div class="label">CitNOW watched</div><div class="value" data-key="citnowWatchRate">83.5%</div><div class="detail" data-detail="citnowWatchRate">273 watched from 327 sent<span class="forecast">Forecast: 339 watched from 405 sent</span></div></div>
-<div class="kpi"><div class="label">Technician efficiency</div><div class="value" data-key="efficiency">97.3%</div><div class="detail">Sold hours ÷ attended hours</div></div>
-<div class="kpi"><div class="label">Parts GP</div><div class="value" data-key="partsGp">£23,000</div><div class="detail" data-detail="partsGp">Month to date<span class="forecast">Forecast: £28,520</span></div></div>
-<div class="kpi"><div class="label">Tyres sold</div><div class="value" data-key="tyres">100</div><div class="detail" data-detail="tyres">Month to date<span class="forecast">Forecast: 124</span></div></div>
-<div class="kpi"><div class="label">Geometry sold</div><div class="value" data-key="geometry">41</div><div class="detail" data-detail="geometry">Month to date<span class="forecast">Forecast: 51</span></div></div>
-<div class="kpi"><div class="label">Fuel treatment</div><div class="value" data-key="fuelRate">43.8%</div><div class="detail" data-detail="fuelRate">42 sold from 96 opportunities<span class="forecast">Forecast: 52 sales at 43.8%</span></div></div>
-<div class="kpi"><div class="label">Service plans</div><div class="value" data-key="servicePlanRate">25.0%</div><div class="detail" data-detail="servicePlanRate">24 sales from 96 opportunities · 48 quotes<span class="forecast">Forecast: 30 sales at 25.0%</span></div></div>
+<div class="mini-grid">
+<div class="kpi mini"><div class="label">Service GP actual</div><div class="value" data-key="serviceGpActual">£0</div><div class="detail" data-detail="serviceGpActual">Month to date</div></div>
+<div class="kpi mini"><div class="label">Labour sales</div><div class="value" data-key="labourSales">£0</div><div class="detail" data-detail="labourSales">Month to date</div></div>
+<div class="kpi mini"><div class="label">Booked hours</div><div class="value" data-key="bookedHours">0.0</div><div class="detail" data-detail="bookedHours">Month to date</div></div>
+<div class="kpi mini"><div class="label">Technician efficiency</div><div class="value" data-key="efficiency">0.0%</div><div class="detail">Sold hours ÷ attended hours</div></div>
 </div>
+</div>
+<div class="headline-group">
+<div class="hero-card performance-card awaiting" id="partsHero">
+<div class="label">Parts GP run rate</div>
+<div class="value" data-key="partsGpRunRate">£0</div>
+<div class="detail" data-detail="partsGpRunRate">Forecast month-end position</div>
+<div class="status"><span class="dot"></span><span id="partsHeroStatus">Awaiting data</span></div>
+</div>
+<div class="mini-grid">
+<div class="kpi mini"><div class="label">Parts GP actual</div><div class="value" data-key="partsGp">£0</div><div class="detail" data-detail="partsGp">Month to date</div></div>
+<div class="kpi mini"><div class="label">Parts GP variance</div><div class="value" data-key="partsVariance">£0</div><div class="detail" data-detail="partsVariance">Forecast versus plan</div></div>
+<div class="kpi mini"><div class="label">Tyres sold</div><div class="value" data-key="tyres">0</div><div class="detail" data-detail="tyres">Month to date</div></div>
+<div class="kpi mini"><div class="label">Geometry sold</div><div class="value" data-key="geometry">0</div><div class="detail" data-detail="geometry">Month to date</div></div>
+</div>
+</div>
+<div class="headline-group">
+<div class="hero-card performance-card awaiting" id="crsHero">
+<div class="label">Average CRS</div>
+<div class="value" data-key="averageCrs">0.0</div>
+<div class="detail" data-detail="averageCrs">Average advisor score</div>
+<div class="status"><span class="dot"></span><span id="crsHeroStatus">Awaiting data</span></div>
+</div>
+<div class="mini-grid">
+<div class="kpi mini"><div class="label">CitNOW watched</div><div class="value" data-key="citnowWatchRate">0.0%</div><div class="detail" data-detail="citnowWatchRate">Watched ÷ sent</div></div>
+<div class="kpi mini"><div class="label">Service plans</div><div class="value" data-key="servicePlanRate">0.0%</div><div class="detail" data-detail="servicePlanRate">Sales ÷ opportunities</div></div>
+<div class="kpi mini"><div class="label">Fuel treatment</div><div class="value" data-key="fuelRate">0.0%</div><div class="detail" data-detail="fuelRate">Sales ÷ opportunities</div></div>
+<div class="kpi mini"><div class="label">Customer returns</div><div class="value" data-key="customerReturns">0</div><div class="detail" data-detail="customerReturns">Selected month total</div></div>
+</div>
+</div>
+</div>
+
+
 </section>
 <section class="panel" id="highlights"><h3>Highlights &amp; Attention</h3><p class="panel-intro">Automatic commentary from the selected month.</p><div class="highlight-list" id="highlightRows"><div><strong>Service-plan leader:</strong> Abbie leads with 8 sales</div><div><strong>Best CRS:</strong> Abbie at 95</div><div><strong>Top technician:</strong> Neil at 109.4% efficiency</div><div><strong>Customer returns:</strong> Luke has 3 returns</div><div><strong>Aged VOR:</strong> 1 aged VOR requires attention</div></div></section><section class="panel" id="advisors"><h3>Advisor month-to-date activity</h3><p class="panel-intro">Daily entries roll into this selected-month view.</p><div class="table-wrap"><table><thead><tr><th>Advisor</th><th>Retail visits</th><th>ACS</th><th>Geometry</th><th>Tyres</th><th>Fuel sold</th><th>SP opportunities</th><th>SP quotes</th><th>SP sales</th><th>CRS</th><th>Returns</th><th>Activity</th></tr></thead><tbody id="advisorRows"><tr><td><strong>Abbie</strong></td><td>110</td><td>18</td><td>13</td><td>28</td><td>15</td><td>30</td><td>18</td><td>8</td><td>95</td><td>1</td><td><div class="bar-track"><div class="bar-fill" style="width:64%"></div></div></td></tr><tr><td><strong>Rhiannon</strong></td><td>105</td><td>12</td><td>11</td><td>25</td><td>11</td><td>26</td><td>13</td><td>6</td><td>93</td><td>2</td><td><div class="bar-track"><div class="bar-fill" style="width:48%"></div></div></td></tr><tr><td><strong>Luke</strong></td><td>100</td><td>10</td><td>9</td><td>24</td><td>9</td><td>22</td><td>10</td><td>5</td><td>91</td><td>3</td><td><div class="bar-track"><div class="bar-fill" style="width:40%"></div></div></td></tr><tr><td><strong>Amad</strong></td><td>92</td><td>7</td><td>8</td><td>23</td><td>7</td><td>18</td><td>7</td><td>5</td><td>94</td><td>1</td><td><div class="bar-track"><div class="bar-fill" style="width:40%"></div></div></td></tr></tbody></table></div></section>
 <section class="panel" id="technicians"><h3>Technician month-to-date performance</h3><p class="panel-intro">Simplified to attended hours, sold hours, efficiency and labour sales.</p><div class="table-wrap"><table><thead><tr><th>Technician</th><th>Attended hours</th><th>Sold hours</th><th>Efficiency</th><th>Labour sales</th><th>Performance</th></tr></thead><tbody id="technicianRows"><tr><td><strong>Chris</strong></td><td>142</td><td>153</td><td>107.7%</td><td>£16,065</td><td><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div></td></tr><tr><td><strong>Neil</strong></td><td>138</td><td>151</td><td>109.4%</td><td>£15,855</td><td><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div></td></tr><tr><td><strong>Andy</strong></td><td>136</td><td>145</td><td>106.6%</td><td>£15,225</td><td><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div></td></tr><tr><td><strong>Jordan</strong></td><td>130</td><td>128</td><td>98.5%</td><td>£13,440</td><td><div class="bar-track"><div class="bar-fill" style="width:98.5%"></div></div></td></tr><tr><td><strong>Sal</strong></td><td>126</td><td>121</td><td>96.0%</td><td>£12,705</td><td><div class="bar-track"><div class="bar-fill" style="width:96.0%"></div></div></td></tr><tr><td><strong>Jarron</strong></td><td>120</td><td>119</td><td>99.2%</td><td>£12,495</td><td><div class="bar-track"><div class="bar-fill" style="width:99.2%"></div></div></td></tr><tr><td><strong>Grant</strong></td><td>116</td><td>110</td><td>94.8%</td><td>£11,550</td><td><div class="bar-track"><div class="bar-fill" style="width:94.8%"></div></div></td></tr><tr><td><strong>Ste</strong></td><td>110</td><td>108</td><td>98.2%</td><td>£11,340</td><td><div class="bar-track"><div class="bar-fill" style="width:98.2%"></div></div></td></tr><tr><td><strong>Temp 1</strong></td><td>48</td><td>43</td><td>89.6%</td><td>£4,515</td><td><div class="bar-track"><div class="bar-fill" style="width:89.6%"></div></div></td></tr><tr><td><strong>Temp 2</strong></td><td>40</td><td>35</td><td>87.5%</td><td>£3,675</td><td><div class="bar-track"><div class="bar-fill" style="width:87.5%"></div></div></td></tr><tr><td><strong>Temp 3</strong></td><td>24</td><td>20</td><td>83.3%</td><td>£2,100</td><td><div class="bar-track"><div class="bar-fill" style="width:83.3%"></div></div></td></tr></tbody></table></div></section>
@@ -80,7 +164,6 @@ main{max-width:1440px;margin:auto;padding:27px 32px 50px}.section-head{display:f
 <section class="panel" id="archive"><h3>Monthly archive</h3><p class="panel-intro">Select any month to retain and revisit previous performance.</p><div class="archive-grid" id="archiveButtons"><button class="month-button" type="button">January</button><button class="month-button" type="button">February</button><button class="month-button" type="button">March</button><button class="month-button" type="button">April</button><button class="month-button" type="button">May</button><button class="month-button" type="button">June</button><button class="month-button selected" type="button">July</button><button class="month-button" type="button">August</button><button class="month-button" type="button">September</button><button class="month-button" type="button">October</button><button class="month-button" type="button">November</button><button class="month-button" type="button">December</button></div></section>
 <div class="footer">Service Dashboard · Single-file GitHub Pages build</div>
 </main>
-
 <script>
 let eodWB=null, captureWB=null;
 const money=v=>new Intl.NumberFormat("en-GB",{style:"currency",currency:"GBP",maximumFractionDigits:0}).format(Number(v)||0);
@@ -159,6 +242,11 @@ function captureData(){
   const advisorSum=k=>advisors.reduce((s,x)=>s+n(x[k]),0);
   const attended=technicians.reduce((s,x)=>s+x.attended,0);
   const sold=technicians.reduce((s,x)=>s+x.sold,0);
+  const labourSales=sumRow(a,12);
+  const bookedHours=sumRow(a,13);
+  const validCrs=advisors.map(x=>x.crs).filter(x=>x>0);
+  const averageCrs=validCrs.length?validCrs.reduce((s,x)=>s+x,0)/validCrs.length:0;
+  const customerReturns=advisorSum("returns");
   const sent=advisorSum("citnow");
   const watched=sumRow(a,8);
   const citnow=[];
@@ -174,7 +262,7 @@ function captureData(){
   }
   return {
     sheet,a,advisors,technicians,citnow,
-    serviceGp:sumRow(a,10),partsGp:sumRow(a,11),
+    serviceGp:sumRow(a,10),partsGp:sumRow(a,11),labourSales,bookedHours,averageCrs,customerReturns,
     sent,watched,watchRate:sent?watched/sent:0,
     efficiency:attended?sold/attended:0,
     tyres:advisorSum("tyres"),geometry:advisorSum("geometry"),
@@ -228,34 +316,71 @@ function render(){
   const serviceGp=e?e.serviceActual:c.serviceGp;
   const partsGp=e?e.partsActual:c.partsGp;
   const serviceRunRate=elapsed?serviceGp*total/elapsed:serviceGp;
+  const partsRunRate=elapsed?partsGp*total/elapsed:partsGp;
   const f=v=>elapsed?v*total/elapsed:0;
   const fuelRate=c.fuelOpp?c.fuelSold/c.fuelOpp:0;
   const spRate=c.spOpp?c.spSales/c.spOpp:0;
+  const partsPlan=e?.partsPlan||0;
+  const partsVariance=partsPlan?partsRunRate-partsPlan:0;
+  const labourSales=e?.labourActual||c.labourSales;
 
   const data={
-    serviceGpRunRate:serviceRunRate,serviceGpActual:serviceGp,partsGp,
-    citnowSent:c.sent,citnowWatchRate:c.watchRate,servicePlanSales:c.spSales,
-    efficiency:c.efficiency,tyres:c.tyres,geometry:c.geometry,fuelRate,servicePlanRate:spRate
+    serviceGpRunRate:serviceRunRate,
+    serviceGpActual:serviceGp,
+    labourSales,
+    bookedHours:c.bookedHours,
+    efficiency:c.efficiency,
+    partsGpRunRate:partsRunRate,
+    partsGp,
+    partsVariance,
+    tyres:c.tyres,
+    geometry:c.geometry,
+    averageCrs:c.averageCrs,
+    citnowWatchRate:c.watchRate,
+    servicePlanRate:spRate,
+    fuelRate,
+    customerReturns:c.customerReturns
   };
-  const formats={serviceGpRunRate:money,serviceGpActual:money,partsGp:money,citnowSent:num,citnowWatchRate:pct,servicePlanSales:num,efficiency:pct,tyres:num,geometry:num,fuelRate:pct,servicePlanRate:pct};
+  const formats={
+    serviceGpRunRate:money,serviceGpActual:money,labourSales:money,
+    bookedHours:v=>(Number(v)||0).toFixed(1),efficiency:pct,
+    partsGpRunRate:money,partsGp:money,partsVariance:money,
+    tyres:num,geometry:num,averageCrs:v=>(Number(v)||0).toFixed(1),
+    citnowWatchRate:pct,servicePlanRate:pct,fuelRate:pct,customerReturns:num
+  };
   Object.entries(formats).forEach(([k,fn])=>document.querySelectorAll(`[data-key="${k}"]`).forEach(el=>el.textContent=fn(data[k])));
 
   document.getElementById("periodLabel").textContent=`${c.sheet} · Month to date`;
-  setDetail("citnowSent",`Month to date · Forecast: ${num(f(c.sent))}`);
-  setDetail("servicePlanSales",`${num(c.spSales)} from ${num(c.spOpp)} opportunities · Forecast: ${num(f(c.spSales))}`);
+  setDetail("serviceGpRunRate",`Plan ${money(e?.servicePlan||0)} · Forecast month-end`);
   setDetail("serviceGpActual",`Month to date<span class="forecast">Forecast: ${money(serviceRunRate)}</span>`);
-  setDetail("citnowWatchRate",`${num(c.watched)} watched from ${num(c.sent)} sent<span class="forecast">Watch rate: ${pct(c.watchRate)}</span>`);
-  setDetail("partsGp",`Month to date<span class="forecast">Forecast: ${money(f(partsGp))}</span>`);
+  setDetail("labourSales",`Month to date<span class="forecast">Forecast: ${money(f(labourSales))}</span>`);
+  setDetail("bookedHours",`Month to date<span class="forecast">Forecast: ${c.bookedHours?c.bookedHours.toFixed(1):"0.0"} hours entered</span>`);
+  setDetail("partsGpRunRate",`Plan ${money(partsPlan)} · Forecast month-end`);
+  setDetail("partsGp",`Month to date<span class="forecast">Forecast: ${money(partsRunRate)}</span>`);
+  setDetail("partsVariance",`${partsVariance>=0?"Ahead of":"Behind"} forecast plan`);
   setDetail("tyres",`Month to date<span class="forecast">Forecast: ${num(f(c.tyres))}</span>`);
   setDetail("geometry",`Month to date<span class="forecast">Forecast: ${num(f(c.geometry))}</span>`);
-  setDetail("fuelRate",`${num(c.fuelSold)} sold from ${num(c.fuelOpp)} opportunities<span class="forecast">Forecast: ${num(f(c.fuelSold))} sales</span>`);
-  setDetail("servicePlanRate",`${num(c.spSales)} sales from ${num(c.spOpp)} opportunities · ${num(c.spQuotes)} quotes<span class="forecast">Forecast: ${num(f(c.spSales))} sales</span>`);
-
-  const targets={serviceGpRunRate:e?.servicePlan||65665,citnowSent:350,servicePlanSales:45};
-  Object.entries(targets).forEach(([k,t])=>{
-    const el=document.querySelector(`[data-status="${k}"]`);if(!el)return;
-    const [cls,label]=status(data[k],t);el.className=`status ${cls}`;el.querySelector("span:last-child").textContent=label;
-  });
+  setDetail("averageCrs",`${c.advisors.filter(a=>a.crs>0).length} advisor score${c.advisors.filter(a=>a.crs>0).length===1?"":"s"} included`);
+  setDetail("citnowWatchRate",`${num(c.watched)} watched from ${num(c.sent)} sent`);
+  setDetail("servicePlanRate",`${num(c.spSales)} sales · ${num(c.spQuotes)} quotes · ${num(c.spOpp)} opportunities`);
+  setDetail("fuelRate",`${num(c.fuelSold)} sold from ${num(c.fuelOpp)} opportunities`);
+  setDetail("customerReturns",`${c.customerReturns===1?"1 return":`${num(c.customerReturns)} returns`} recorded`);
+  function colourPerformanceCard(id,value,target,higherIsBetter=true){
+    const card=document.getElementById(id);
+    card.classList.remove("awaiting","performance-green","performance-amber","performance-red");
+    let level="awaiting",label="Awaiting data";
+    if(target>0 && value!==0){
+      const ratio=higherIsBetter?value/target:target/Math.max(value,0.0001);
+      if(ratio>=1){level="performance-green";label="On or above target"}
+      else if(ratio>=0.9){level="performance-amber";label="Close to target"}
+      else{level="performance-red";label="Below target"}
+    }
+    card.classList.add(level);
+    card.querySelector(".status span:last-child").textContent=label;
+  }
+  colourPerformanceCard("serviceHero",serviceRunRate,e?.servicePlan||65665,true);
+  colourPerformanceCard("partsHero",partsRunRate,partsPlan||28500,true);
+  colourPerformanceCard("crsHero",c.averageCrs,90,true);
 
   document.getElementById("advisorRows").innerHTML=c.advisors.map(a=>`<tr>
     <td><strong>${esc(a.name)}</strong></td><td>${num(a.visits)}</td><td>${num(a.acs)}</td><td>${num(a.geometry)}</td>
