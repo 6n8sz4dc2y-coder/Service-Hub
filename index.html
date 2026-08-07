@@ -65,7 +65,7 @@ main{max-width:1440px;margin:auto;padding:27px 32px 50px}.section-head{display:f
 .performance-card .dot{background:#fff}
 .mini-grid{
   display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
+  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
   gap:9px;
   margin-top:9px;
 }
@@ -78,12 +78,10 @@ main{max-width:1440px;margin:auto;padding:27px 32px 50px}.section-head{display:f
 .kpi.mini .value{font-size:22px;margin:7px 0 5px}
 .kpi.mini .detail{font-size:11px;min-height:30px;line-height:1.35}
 .kpi.mini .forecast{margin-top:3px}
+.kpi.mini.placeholder{border-style:dashed;opacity:.65}
+.kpi.mini.placeholder .value{color:var(--muted)}
 @media(max-width:1100px){
   .headline-columns{grid-template-columns:1fr}
-  .mini-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
-}
-@media(max-width:760px){
-  .mini-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 @media(max-width:480px){
   .mini-grid{grid-template-columns:1fr}
@@ -122,9 +120,9 @@ main{max-width:1440px;margin:auto;padding:27px 32px 50px}.section-head{display:f
 </div>
 <div class="mini-grid">
 <div class="kpi mini"><div class="label">Service GP actual</div><div class="value" data-key="serviceGpActual">£0</div><div class="detail" data-detail="serviceGpActual">Month to date</div></div>
-<div class="kpi mini"><div class="label">Labour sales</div><div class="value" data-key="labourSales">£0</div><div class="detail" data-detail="labourSales">Month to date</div></div>
-<div class="kpi mini"><div class="label">Booked hours</div><div class="value" data-key="bookedHours">0.0</div><div class="detail" data-detail="bookedHours">Month to date</div></div>
+<div class="kpi mini"><div class="label">Labour hours</div><div class="value" data-key="labourHours">0.0</div><div class="detail" data-detail="labourHours">Sold hours, month to date</div></div>
 <div class="kpi mini"><div class="label">Technician efficiency</div><div class="value" data-key="efficiency">0.0%</div><div class="detail">Sold hours ÷ attended hours</div></div>
+<div class="kpi mini placeholder"><div class="label">Red &amp; amber work</div><div class="value">—</div><div class="detail">Awaiting workbook field</div></div>
 </div>
 </div>
 <div class="headline-group">
@@ -136,9 +134,10 @@ main{max-width:1440px;margin:auto;padding:27px 32px 50px}.section-head{display:f
 </div>
 <div class="mini-grid">
 <div class="kpi mini"><div class="label">Parts GP actual</div><div class="value" data-key="partsGp">£0</div><div class="detail" data-detail="partsGp">Month to date</div></div>
-<div class="kpi mini"><div class="label">Parts GP variance</div><div class="value" data-key="partsVariance">£0</div><div class="detail" data-detail="partsVariance">Forecast versus plan</div></div>
+<div class="kpi mini placeholder"><div class="label">Parts trade sell %</div><div class="value">—</div><div class="detail">Awaiting workbook field</div></div>
 <div class="kpi mini"><div class="label">Tyres sold</div><div class="value" data-key="tyres">0</div><div class="detail" data-detail="tyres">Month to date</div></div>
 <div class="kpi mini"><div class="label">Geometry sold</div><div class="value" data-key="geometry">0</div><div class="detail" data-detail="geometry">Month to date</div></div>
+<div class="kpi mini placeholder"><div class="label">Air-con treatment %</div><div class="value">—</div><div class="detail">Awaiting workbook field</div></div>
 </div>
 </div>
 <div class="headline-group">
@@ -150,7 +149,7 @@ main{max-width:1440px;margin:auto;padding:27px 32px 50px}.section-head{display:f
 </div>
 <div class="mini-grid">
 <div class="kpi mini"><div class="label">CitNOW watched</div><div class="value" data-key="citnowWatchRate">0.0%</div><div class="detail" data-detail="citnowWatchRate">Watched ÷ sent</div></div>
-<div class="kpi mini"><div class="label">Service plans</div><div class="value" data-key="servicePlanRate">0.0%</div><div class="detail" data-detail="servicePlanRate">Sales ÷ opportunities</div></div>
+<div class="kpi mini"><div class="label">Service plans sold</div><div class="value" data-key="servicePlanSales">0</div><div class="detail" data-detail="servicePlanSales">Sales ÷ opportunities</div></div>
 <div class="kpi mini"><div class="label">Fuel treatment</div><div class="value" data-key="fuelRate">0.0%</div><div class="detail" data-detail="fuelRate">Sales ÷ opportunities</div></div>
 <div class="kpi mini"><div class="label">Customer returns</div><div class="value" data-key="customerReturns">0</div><div class="detail" data-detail="customerReturns">Selected month total</div></div>
 </div>
@@ -243,8 +242,6 @@ function captureData(){
   const advisorSum=k=>advisors.reduce((s,x)=>s+n(x[k]),0);
   const attended=technicians.reduce((s,x)=>s+x.attended,0);
   const sold=technicians.reduce((s,x)=>s+x.sold,0);
-  const labourSales=sumRow(a,12);
-  const bookedHours=sumRow(a,13);
   const validCrs=advisors.map(x=>x.crs).filter(x=>x>0);
   const averageCrs=validCrs.length?validCrs.reduce((s,x)=>s+x,0)/validCrs.length:0;
   const customerReturns=advisorSum("returns");
@@ -263,9 +260,9 @@ function captureData(){
   }
   return {
     sheet,a,advisors,technicians,citnow,
-    serviceGp:sumRow(a,10),partsGp:sumRow(a,11),labourSales,bookedHours,averageCrs,customerReturns,
+    serviceGp:sumRow(a,10),partsGp:sumRow(a,11),averageCrs,customerReturns,
     sent,watched,watchRate:sent?watched/sent:0,
-    efficiency:attended?sold/attended:0,
+    efficiency:attended?sold/attended:0,soldHours:sold,
     tyres:advisorSum("tyres"),geometry:advisorSum("geometry"),
     fuelSold:advisorSum("fuel"),fuelOpp:advisorSum("fuelOpp"),
     spSales:advisorSum("spSales"),spQuotes:advisorSum("spQuotes"),spOpp:advisorSum("spOpp"),
@@ -322,48 +319,42 @@ function render(){
   const fuelRate=c.fuelOpp?c.fuelSold/c.fuelOpp:0;
   const spRate=c.spOpp?c.spSales/c.spOpp:0;
   const partsPlan=e?.partsPlan||0;
-  const partsVariance=partsPlan?partsRunRate-partsPlan:0;
-  const labourSales=e?.labourActual||c.labourSales;
 
   const data={
     serviceGpRunRate:serviceRunRate,
     serviceGpActual:serviceGp,
-    labourSales,
-    bookedHours:c.bookedHours,
+    labourHours:c.soldHours,
     efficiency:c.efficiency,
     partsGpRunRate:partsRunRate,
     partsGp,
-    partsVariance,
     tyres:c.tyres,
     geometry:c.geometry,
     averageCrs:c.averageCrs,
     citnowWatchRate:c.watchRate,
-    servicePlanRate:spRate,
+    servicePlanSales:c.spSales,
     fuelRate,
     customerReturns:c.customerReturns
   };
   const formats={
-    serviceGpRunRate:money,serviceGpActual:money,labourSales:money,
-    bookedHours:v=>(Number(v)||0).toFixed(1),efficiency:pct,
-    partsGpRunRate:money,partsGp:money,partsVariance:money,
+    serviceGpRunRate:money,serviceGpActual:money,labourHours:v=>(Number(v)||0).toFixed(1),
+    efficiency:pct,
+    partsGpRunRate:money,partsGp:money,
     tyres:num,geometry:num,averageCrs:v=>(Number(v)||0).toFixed(1),
-    citnowWatchRate:pct,servicePlanRate:pct,fuelRate:pct,customerReturns:num
+    citnowWatchRate:pct,servicePlanSales:num,fuelRate:pct,customerReturns:num
   };
   Object.entries(formats).forEach(([k,fn])=>document.querySelectorAll(`[data-key="${k}"]`).forEach(el=>el.textContent=fn(data[k])));
 
   document.getElementById("periodLabel").textContent=`${c.sheet} · Month to date`;
   setDetail("serviceGpRunRate",`Plan ${money(e?.servicePlan||0)} · Forecast month-end`);
   setDetail("serviceGpActual",`Month to date<span class="forecast">Forecast: ${money(serviceRunRate)}</span>`);
-  setDetail("labourSales",`Month to date<span class="forecast">Forecast: ${money(f(labourSales))}</span>`);
-  setDetail("bookedHours",`Month to date<span class="forecast">Forecast: ${c.bookedHours?c.bookedHours.toFixed(1):"0.0"} hours entered</span>`);
+  setDetail("labourHours",`Sold hours, month to date<span class="forecast">Forecast: ${f(c.soldHours).toFixed(1)} hours</span>`);
   setDetail("partsGpRunRate",`Plan ${money(partsPlan)} · Forecast month-end`);
   setDetail("partsGp",`Month to date<span class="forecast">Forecast: ${money(partsRunRate)}</span>`);
-  setDetail("partsVariance",`${partsVariance>=0?"Ahead of":"Behind"} forecast plan`);
   setDetail("tyres",`Month to date<span class="forecast">Forecast: ${num(f(c.tyres))}</span>`);
   setDetail("geometry",`Month to date<span class="forecast">Forecast: ${num(f(c.geometry))}</span>`);
   setDetail("averageCrs",`${c.advisors.filter(a=>a.crs>0).length} advisor score${c.advisors.filter(a=>a.crs>0).length===1?"":"s"} included`);
   setDetail("citnowWatchRate",`${num(c.watched)} watched from ${num(c.sent)} sent`);
-  setDetail("servicePlanRate",`${num(c.spSales)} sales · ${num(c.spQuotes)} quotes · ${num(c.spOpp)} opportunities`);
+  setDetail("servicePlanSales",`${num(c.spOpp)} opportunities<span class="forecast">${pct(spRate)} conversion</span>`);
   setDetail("fuelRate",`${num(c.fuelSold)} sold from ${num(c.fuelOpp)} opportunities`);
   setDetail("customerReturns",`${c.customerReturns===1?"1 return":`${num(c.customerReturns)} returns`} recorded`);
   function colourPerformanceCard(id,value,target,higherIsBetter=true){
