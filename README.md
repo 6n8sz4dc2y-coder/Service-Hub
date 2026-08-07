@@ -32,9 +32,10 @@ The data is embedded into the HTML pages so the dashboard works reliably on GitH
 
 ## Filling in daily/monthly figures
 
-The dashboard reads two uploaded Excel files, both selected from the header controls — nothing is committed to this repo:
+The dashboard reads three uploaded Excel files, all selected from the header controls — nothing is committed to this repo:
 
-- **Service workbook** — day-to-day advisor, technician, CitNOW, CRS, returns and service plan activity. Use `workbook-template/Service-Tracker-Template.xlsx` as the starting point; its `Read Me` tab explains which two tabs (Advisor Daily, Technician Daily) need daily entries and how everything else rolls up automatically.
-- **End of Day** — Service GP and Parts GP plan vs. actual, one sheet per month. Unchanged from before.
+- **Service workbook** — day-to-day advisor, technician, CitNOW, CRS, returns and service plan activity. Use `workbook-template/Service-Tracker-Template.xlsx` as the starting point; its `Read Me` tab explains which two tabs (Advisor Daily, Technician Daily) need daily entries and how everything else rolls up automatically. Tyres are logged as a count (e.g. 4 possible, 2 sold on one visit) rather than a Y/N flag, since a single vehicle can take more than one.
+- **End of Day** — Service GP and Parts GP plan vs. actual, one sheet per month, sheet names like `JULY 2026`.
+- **Parts workbook** — trade parts performance, service kit/wiper/hybrid filter/fuel treatment sales, one sheet per month named `July 2026` etc. Read the Sold/Target columns on each metric's row; the dashboard looks up rows by label text so reordering rows is safe, but don't rename the metric labels (`Service Kits`, `Hybrid Battery Filters`, `Fuel Treatments`, `Wipers`, `Trade — Month`) or the "Sold"/"Target" column headers.
 
-The service workbook's `Monthly Rollup` tab is what the dashboard actually parses (by column header, not fixed cell positions), so reordering or adding columns to the daily-entry tabs is safe as long as the header text on `Monthly Rollup` stays the same.
+The service workbook's `Monthly Rollup` tab is what the dashboard actually parses (by column header, not fixed cell positions), so reordering or adding columns to the daily-entry tabs is safe as long as the header text on `Monthly Rollup` stays the same. The End of Day and Parts workbooks are matched by row label text for the same reason — both are pre-existing templates outside this repo, so the dashboard adapts to their layout rather than the other way round.

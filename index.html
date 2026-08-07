@@ -39,7 +39,7 @@ main{max-width:1440px;margin:auto;padding:27px 32px 50px}.section-head{display:f
 
 .headline-columns{
   display:grid;
-  grid-template-columns:repeat(3,minmax(0,1fr));
+  grid-template-columns:repeat(2,minmax(0,1fr));
   gap:14px;
   margin-bottom:24px;
 }
@@ -63,10 +63,6 @@ main{max-width:1440px;margin:auto;padding:27px 32px 50px}.section-head{display:f
 .performance-card .value{font-size:31px;margin:10px 0 7px}
 .performance-card .status{margin-top:9px}
 .performance-card .dot{background:#fff}
-.hero-badge{position:absolute;top:17px;right:19px;text-align:right;line-height:1.2;color:#fff}
-.hero-badge-label{font-size:9px;text-transform:uppercase;letter-spacing:.5px;opacity:.7}
-.hero-badge-value{font-size:20px;font-weight:800;margin:1px 0}
-.hero-badge-detail{font-size:10px;opacity:.85;font-weight:700}
 .mini-grid{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
@@ -104,14 +100,19 @@ main{max-width:1440px;margin:auto;padding:27px 32px 50px}.section-head{display:f
 <label class="file-button" for="captureFile" id="captureButton">Upload file</label>
 <input accept=".xlsx,.xls,.xlsm" id="captureFile" type="file"/>
 </div>
+<div class="file-control">
+<label for="partsFile">Parts workbook</label>
+<label class="file-button" for="partsFile" id="partsButton">Upload file</label>
+<input accept=".xlsx,.xls,.xlsm" id="partsFile" type="file"/>
+</div>
 <div class="file-control month-control">
 <label for="monthSelect">Reporting month</label>
 <select id="monthSelect"><option value="July 2026">July 2026</option></select>
 </div>
 </div></div></header>
-<nav><div class="nav-inner"><a class="nav-link" href="#dashboard">Dashboard</a><a class="nav-link active" href="#highlights">Highlights</a><a class="nav-link" href="#advisors">Advisors</a><a class="nav-link" href="#technicians">Technicians</a><a class="nav-link" href="#citnow">Weekly CitNOW</a><a class="nav-link" href="#archive">Monthly archive</a></div></nav>
+<nav><div class="nav-inner"><a class="nav-link active" href="#dashboard">Dashboard</a><a class="nav-link" href="#highlights">Highlights</a><a class="nav-link" href="#advisors">Advisors</a><a class="nav-link" href="#technicians">Technicians</a><a class="nav-link" href="#citnow">Weekly CitNOW</a><a class="nav-link" href="#archive">Monthly archive</a></div></nav>
 <main><div class="load-notice" id="loadNotice">Upload the service workbook to populate the dashboard. Upload End of Day for Service GP and Parts GP.</div>
-<section class="tab-section" id="dashboard">
+<section class="tab-section active" id="dashboard">
 <div class="section-head"><div><h2>Management headlines</h2><p>Only the measures that need immediate management attention.</p></div><div class="period" id="periodLabel">July 2026 · Month to date</div></div>
 
 <div class="headline-columns">
@@ -126,7 +127,8 @@ main{max-width:1440px;margin:auto;padding:27px 32px 50px}.section-head{display:f
 <div class="kpi mini"><div class="label">Service GP actual</div><div class="value" data-key="serviceGpActual">£0</div><div class="detail" data-detail="serviceGpActual">Month to date</div></div>
 <div class="kpi mini"><div class="label">Labour hours</div><div class="value" data-key="labourHours">0.0</div><div class="detail" data-detail="labourHours">Sold hours, month to date</div></div>
 <div class="kpi mini"><div class="label">Technician efficiency</div><div class="value" data-key="efficiency">0.0%</div><div class="detail">Sold hours ÷ attended hours</div></div>
-<div class="kpi mini placeholder"><div class="label">Red &amp; amber work</div><div class="value">—</div><div class="detail">Awaiting workbook field</div></div>
+<div class="kpi mini placeholder"><div class="label">Red work</div><div class="value">—</div><div class="detail">Awaiting workbook field</div></div>
+<div class="kpi mini placeholder"><div class="label">Amber work</div><div class="value">—</div><div class="detail">Awaiting workbook field</div></div>
 </div>
 </div>
 <div class="headline-group">
@@ -138,42 +140,54 @@ main{max-width:1440px;margin:auto;padding:27px 32px 50px}.section-head{display:f
 </div>
 <div class="mini-grid">
 <div class="kpi mini"><div class="label">Parts GP actual</div><div class="value" data-key="partsGp">£0</div><div class="detail" data-detail="partsGp">Month to date</div></div>
-<div class="kpi mini placeholder"><div class="label">Trade parts performance</div><div class="value">—</div><div class="detail">Awaiting workbook field</div></div>
-<div class="kpi mini"><div class="label">Tyres sold</div><div class="value" data-key="tyres">0</div><div class="detail" data-detail="tyres">Month to date</div></div>
-<div class="kpi mini"><div class="label">Geometry sold</div><div class="value" data-key="geometry">0</div><div class="detail" data-detail="geometry">Month to date</div></div>
+<div class="kpi mini"><div class="label">Trade parts performance</div><div class="value" data-key="tradePartsPct">0.0%</div><div class="detail" data-detail="tradePartsPct">vs plan, month to date</div></div>
+<div class="kpi mini"><div class="label">Service kit sales</div><div class="value" data-key="serviceKits">0</div><div class="detail" data-detail="serviceKits">Sold, month to date</div></div>
+<div class="kpi mini"><div class="label">Wiper blade sales</div><div class="value" data-key="wiperPct">0.0%</div><div class="detail" data-detail="wiperPct">Of target</div></div>
+<div class="kpi mini"><div class="label">Fuel treatments (parts)</div><div class="value" data-key="partsFuel">0</div><div class="detail" data-detail="partsFuel">Sold, month to date</div></div>
+<div class="kpi mini"><div class="label">Hybrid filter sales</div><div class="value" data-key="hybridFilters">0</div><div class="detail" data-detail="hybridFilters">Sold, month to date</div></div>
 </div>
 </div>
 <div class="headline-group">
 <div class="hero-card performance-card awaiting" id="crsHero">
-<div class="hero-badge">
-<div class="hero-badge-label">Returns</div>
-<div class="hero-badge-value" data-key="customerReturns">0</div>
-<div class="hero-badge-detail" data-detail="customerReturns">Forecast —</div>
-</div>
-<div class="label">Average CRS</div>
-<div class="value" data-key="averageCrs">0.0</div>
-<div class="detail" data-detail="averageCrs">Average advisor score</div>
+<div class="label">CRS score</div>
+<div class="value" data-key="crsScore">—</div>
+<div class="detail" data-detail="crsScore">Awaiting workbook field</div>
 <div class="status"><span class="dot"></span><span id="crsHeroStatus">Awaiting data</span></div>
 </div>
 <div class="mini-grid">
+<div class="kpi mini"><div class="label">Customer returns</div><div class="value" data-key="customerReturns">0</div><div class="detail" data-detail="customerReturns">Selected month total</div></div>
+<div class="kpi mini"><div class="label">Average adviser score</div><div class="value" data-key="averageCrs">0.0</div><div class="detail" data-detail="averageCrs">Average advisor score</div></div>
+<div class="kpi mini"><div class="label">Top returns</div><div class="value" data-key="topReturnsName">—</div><div class="detail" data-detail="topReturnsName">No returns recorded</div></div>
 <div class="kpi mini"><div class="label">CitNOW watched</div><div class="value" data-key="citnowWatchRate">0.0%</div><div class="detail" data-detail="citnowWatchRate">Watched ÷ sent</div></div>
 <div class="kpi mini"><div class="label">Service plans sold</div><div class="value" data-key="servicePlanSales">0</div><div class="detail" data-detail="servicePlanSales">Sales ÷ opportunities</div></div>
-<div class="kpi mini"><div class="label">Fuel treatment</div><div class="value" data-key="fuelRate">0.0%</div><div class="detail" data-detail="fuelRate">Sales ÷ opportunities</div></div>
-<div class="kpi mini placeholder"><div class="label">Air-con treatment %</div><div class="value">—</div><div class="detail">Awaiting workbook field</div></div>
+</div>
+</div>
+<div class="headline-group">
+<div class="hero-card performance-card awaiting" id="performanceHero">
+<div class="label">Sales per visit</div>
+<div class="value" data-key="salesPerVisit">0.0</div>
+<div class="detail" data-detail="salesPerVisit">Add-ons sold ÷ retail visits</div>
+<div class="status"><span class="dot"></span><span id="performanceHeroStatus">Awaiting data</span></div>
+</div>
+<div class="mini-grid">
+<div class="kpi mini"><div class="label">Tyres sold</div><div class="value" data-key="tyres">0</div><div class="detail" data-detail="tyres">Month to date</div></div>
+<div class="kpi mini"><div class="label">Fuel treatment</div><div class="value" data-key="fuelSoldCount">0</div><div class="detail" data-detail="fuelSoldCount">Month to date</div></div>
+<div class="kpi mini"><div class="label">Air-con sold</div><div class="value" data-key="acSold">0</div><div class="detail" data-detail="acSold">Month to date</div></div>
+<div class="kpi mini"><div class="label">Geometry sold</div><div class="value" data-key="geometry">0</div><div class="detail" data-detail="geometry">Month to date</div></div>
 </div>
 </div>
 </div>
 
 
 </section>
-<section class="panel tab-section active" id="highlights"><h3>Highlights &amp; Attention</h3><p class="panel-intro">Automatic commentary from the selected month.</p><div class="highlight-list" id="highlightRows"><div><strong>Service-plan leader:</strong> Abbie leads with 8 sales</div><div><strong>Best CRS:</strong> Abbie at 95</div><div><strong>Top technician:</strong> Neil at 109.4% efficiency</div><div><strong>Customer returns:</strong> Luke has 3 returns</div><div><strong>Aged VOR:</strong> 1 aged VOR requires attention</div></div></section><section class="panel tab-section" id="advisors"><h3>Advisor month-to-date activity</h3><p class="panel-intro">Daily entries roll into this selected-month view.</p><div class="table-wrap"><table><thead><tr><th>Advisor</th><th>Retail visits</th><th>A/C</th><th>Geometry</th><th>Tyres</th><th>Fuel sold</th><th>SP quoted</th><th>SP sold</th><th>CRS</th><th>Returns</th><th>Activity</th></tr></thead><tbody id="advisorRows"><tr><td><strong>Abbie</strong></td><td>110</td><td>18</td><td>13</td><td>28</td><td>15</td><td>30</td><td>8</td><td>95</td><td>1</td><td><div class="bar-track"><div class="bar-fill" style="width:64%"></div></div></td></tr><tr><td><strong>Rhiannon</strong></td><td>105</td><td>12</td><td>11</td><td>25</td><td>11</td><td>26</td><td>6</td><td>93</td><td>2</td><td><div class="bar-track"><div class="bar-fill" style="width:48%"></div></div></td></tr><tr><td><strong>Luke</strong></td><td>100</td><td>10</td><td>9</td><td>24</td><td>9</td><td>22</td><td>5</td><td>91</td><td>3</td><td><div class="bar-track"><div class="bar-fill" style="width:40%"></div></div></td></tr><tr><td><strong>Amad</strong></td><td>92</td><td>7</td><td>8</td><td>23</td><td>7</td><td>18</td><td>5</td><td>94</td><td>1</td><td><div class="bar-track"><div class="bar-fill" style="width:40%"></div></div></td></tr></tbody></table></div></section>
+<section class="panel tab-section" id="highlights"><h3>Highlights &amp; Attention</h3><p class="panel-intro">Automatic commentary from the selected month.</p><div class="highlight-list" id="highlightRows"><div><strong>Service-plan leader:</strong> Abbie leads with 8 sales</div><div><strong>Best CRS:</strong> Abbie at 95</div><div><strong>Top technician:</strong> Neil at 109.4% efficiency</div><div><strong>Customer returns:</strong> Luke has 3 returns</div><div><strong>Aged VOR:</strong> 1 aged VOR requires attention</div></div></section><section class="panel tab-section" id="advisors"><h3>Advisor month-to-date activity</h3><p class="panel-intro">Daily entries roll into this selected-month view.</p><div class="table-wrap"><table><thead><tr><th>Advisor</th><th>Retail visits</th><th>A/C</th><th>Geometry</th><th>Tyres</th><th>Fuel sold</th><th>SP quoted</th><th>SP sold</th><th>CRS</th><th>Returns</th><th>Activity</th></tr></thead><tbody id="advisorRows"><tr><td><strong>Abbie</strong></td><td>110</td><td>18</td><td>13</td><td>28</td><td>15</td><td>30</td><td>8</td><td>95</td><td>1</td><td><div class="bar-track"><div class="bar-fill" style="width:64%"></div></div></td></tr><tr><td><strong>Rhiannon</strong></td><td>105</td><td>12</td><td>11</td><td>25</td><td>11</td><td>26</td><td>6</td><td>93</td><td>2</td><td><div class="bar-track"><div class="bar-fill" style="width:48%"></div></div></td></tr><tr><td><strong>Luke</strong></td><td>100</td><td>10</td><td>9</td><td>24</td><td>9</td><td>22</td><td>5</td><td>91</td><td>3</td><td><div class="bar-track"><div class="bar-fill" style="width:40%"></div></div></td></tr><tr><td><strong>Amad</strong></td><td>92</td><td>7</td><td>8</td><td>23</td><td>7</td><td>18</td><td>5</td><td>94</td><td>1</td><td><div class="bar-track"><div class="bar-fill" style="width:40%"></div></div></td></tr></tbody></table></div></section>
 <section class="panel tab-section" id="technicians"><h3>Technician month-to-date performance</h3><p class="panel-intro">Simplified to attended hours, sold hours, efficiency and labour sales.</p><div class="table-wrap"><table><thead><tr><th>Technician</th><th>Attended hours</th><th>Sold hours</th><th>Efficiency</th><th>Labour sales</th><th>Performance</th></tr></thead><tbody id="technicianRows"><tr><td><strong>Chris</strong></td><td>142</td><td>153</td><td>107.7%</td><td>£16,065</td><td><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div></td></tr><tr><td><strong>Neil</strong></td><td>138</td><td>151</td><td>109.4%</td><td>£15,855</td><td><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div></td></tr><tr><td><strong>Andy</strong></td><td>136</td><td>145</td><td>106.6%</td><td>£15,225</td><td><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div></td></tr><tr><td><strong>Jordan</strong></td><td>130</td><td>128</td><td>98.5%</td><td>£13,440</td><td><div class="bar-track"><div class="bar-fill" style="width:98.5%"></div></div></td></tr><tr><td><strong>Sal</strong></td><td>126</td><td>121</td><td>96.0%</td><td>£12,705</td><td><div class="bar-track"><div class="bar-fill" style="width:96.0%"></div></div></td></tr><tr><td><strong>Jarron</strong></td><td>120</td><td>119</td><td>99.2%</td><td>£12,495</td><td><div class="bar-track"><div class="bar-fill" style="width:99.2%"></div></div></td></tr><tr><td><strong>Grant</strong></td><td>116</td><td>110</td><td>94.8%</td><td>£11,550</td><td><div class="bar-track"><div class="bar-fill" style="width:94.8%"></div></div></td></tr><tr><td><strong>Ste</strong></td><td>110</td><td>108</td><td>98.2%</td><td>£11,340</td><td><div class="bar-track"><div class="bar-fill" style="width:98.2%"></div></div></td></tr><tr><td><strong>Temp 1</strong></td><td>48</td><td>43</td><td>89.6%</td><td>£4,515</td><td><div class="bar-track"><div class="bar-fill" style="width:89.6%"></div></div></td></tr><tr><td><strong>Temp 2</strong></td><td>40</td><td>35</td><td>87.5%</td><td>£3,675</td><td><div class="bar-track"><div class="bar-fill" style="width:87.5%"></div></div></td></tr><tr><td><strong>Temp 3</strong></td><td>24</td><td>20</td><td>83.3%</td><td>£2,100</td><td><div class="bar-track"><div class="bar-fill" style="width:83.3%"></div></div></td></tr></tbody></table></div></section>
 <section class="panel tab-section" id="citnow"><h3>Weekly CitNOW by advisor</h3><p class="panel-intro">Individual watch rates are reviewed weekly rather than entered every day.</p><div class="table-wrap"><table><thead><tr><th>Advisor</th><th>Week 1</th><th>Week 2</th><th>Week 3</th><th>Week 4</th><th>Week 5</th><th>Month rate</th></tr></thead><tbody id="citnowRows"><tr><td><strong>Abbie</strong></td><td>84.2%</td><td>83.3%</td><td>85.0%</td><td>83.3%</td><td>82.4%</td><td><strong>83.7%</strong></td></tr><tr><td><strong>Rhiannon</strong></td><td>83.3%</td><td>82.4%</td><td>83.3%</td><td>82.4%</td><td>85.7%</td><td><strong>83.3%</strong></td></tr><tr><td><strong>Luke</strong></td><td>81.3%</td><td>81.3%</td><td>82.4%</td><td>81.3%</td><td>84.6%</td><td><strong>82.1%</strong></td></tr><tr><td><strong>Amad</strong></td><td>80.0%</td><td>85.7%</td><td>81.3%</td><td>80.0%</td><td>84.6%</td><td><strong>82.2%</strong></td></tr></tbody></table></div></section>
 <section class="panel tab-section" id="archive"><h3>Monthly archive</h3><p class="panel-intro">Select any month to retain and revisit previous performance.</p><div class="archive-grid" id="archiveButtons"><button class="month-button" type="button">January</button><button class="month-button" type="button">February</button><button class="month-button" type="button">March</button><button class="month-button" type="button">April</button><button class="month-button" type="button">May</button><button class="month-button" type="button">June</button><button class="month-button selected" type="button">July</button><button class="month-button" type="button">August</button><button class="month-button" type="button">September</button><button class="month-button" type="button">October</button><button class="month-button" type="button">November</button><button class="month-button" type="button">December</button></div></section>
 <div class="footer">Service Dashboard · Single-file GitHub Pages build</div>
 </main>
 <script>
-let eodWB=null, captureWB=null;
+let eodWB=null, captureWB=null, partsWB=null;
 const money=v=>new Intl.NumberFormat("en-GB",{style:"currency",currency:"GBP",maximumFractionDigits:0}).format(Number(v)||0);
 const pct=v=>`${((Number(v)||0)*100).toFixed(1)}%`;
 const num=v=>new Intl.NumberFormat("en-GB",{maximumFractionDigits:0}).format(Number(v)||0);
@@ -302,7 +316,7 @@ function targetsData(){
     serviceGp:find("service gp"),partsGp:find("parts gp"),crs:find("crs target"),
     tyres:find("tyres monthly"),geometry:find("geometry monthly"),ac:find("a/c monthly"),
     fuel:find("fuel treatment monthly"),servicePlans:find("service plans monthly"),
-    citnowWatched:find("citnow watched")
+    citnowWatched:find("citnow watched"),salesPerVisit:find("sales per visit")
   };
 }
 function captureData(){
@@ -347,7 +361,10 @@ function captureData(){
     serviceGp:0,partsGp:0,averageCrs,customerReturns:advisorSum("returns"),
     sent,watched,watchRate:sent?watched/sent:0,
     efficiency:attended?sold/attended:0,soldHours:sold,
-    tyres:advisorSum("tyres"),geometry:advisorSum("geometry"),
+    visits:advisorSum("visits"),
+    tyres:advisorSum("tyres"),tyresOpp:advisorSum("tyresOpp"),
+    geometry:advisorSum("geometry"),geometryOpp:advisorSum("geometryOpp"),
+    ac:advisorSum("ac"),acOpp:advisorSum("acOpp"),
     fuelSold:advisorSum("fuel"),fuelOpp:advisorSum("fuelOpp"),
     spSales:advisorSum("spSales"),spOpp:advisorSum("spOpp"),
     agedVor:null,elapsedDays:elapsedDaysFor(selectedMonth)
@@ -375,19 +392,55 @@ function findEodSheet(){
   return eodWB.SheetNames.find(s=>candidates.includes(norm(s))) ||
          eodWB.SheetNames.find(s=>norm(s).includes(m.slice(0,3)) && norm(s).includes(y));
 }
+function findRowByLabel(a,col,textIncludes){
+  const needle=textIncludes.toLowerCase();
+  for(let r=0;r<a.length;r++){
+    if(String(a[r]?.[col-1]??"").toLowerCase().includes(needle)) return r+1;
+  }
+  return -1;
+}
 function eodData(){
   const sheet=findEodSheet(); if(!sheet)return null;
   const a=rows(eodWB,sheet);
+  const elapsedRow=findRowByLabel(a,4,"days to date");
+  const totalRow=findRowByLabel(a,4,"days in month");
+  const serviceRow=findRowByLabel(a,3,"service gp inc bonus");
+  const partsRow=findRowByLabel(a,3,"parts gp inc bonus");
+  const elapsed=elapsedRow>0?n(cell(a,elapsedRow,5)):0;
   return {
     sheet,
-    elapsed:n(cell(a,3,5))||1,
-    total:n(cell(a,4,5))||n(cell(a,3,5))||1,
-    labourPlan:n(cell(a,7,3)),
-    labourActual:n(cell(a,7,5)),
-    servicePlan:n(cell(a,17,3)),
-    serviceActual:n(cell(a,17,5)),
-    partsPlan:n(cell(a,26,3)),
-    partsActual:n(cell(a,26,5))
+    elapsed:elapsed||1,
+    total:(totalRow>0?n(cell(a,totalRow,5)):0)||elapsed||1,
+    serviceActual:serviceRow>0?n(cell(a,serviceRow,4)):0,
+    servicePlan:serviceRow>0?n(cell(a,serviceRow,6)):0,
+    partsActual:partsRow>0?n(cell(a,partsRow,4)):0,
+    partsPlan:partsRow>0?n(cell(a,partsRow,6)):0
+  };
+}
+function findPartsRow(a,col,mustIncludeAll){
+  const[first,...rest]=mustIncludeAll;
+  for(let r=0;r<a.length;r++){
+    const v=String(a[r]?.[col-1]??"").toLowerCase().trim();
+    if(v.startsWith(first) && rest.every(k=>v.includes(k))) return r+1;
+  }
+  return -1;
+}
+function partsData(){
+  if(!partsWB)return null;
+  const sheet=document.getElementById("monthSelect").value;
+  if(!partsWB.SheetNames.includes(sheet))return null;
+  const a=rows(partsWB,sheet);
+  const metric=keywords=>{
+    const r=findPartsRow(a,1,keywords);
+    return r>0?{sold:n(cell(a,r,4)),target:n(cell(a,r,5))}:{sold:0,target:0};
+  };
+  return{
+    sheet,
+    serviceKits:metric(["service kits"]),
+    hybridFilters:metric(["hybrid","filter"]),
+    fuelTreatments:metric(["fuel treatment"]),
+    wipers:metric(["wiper"]),
+    tradeMonth:metric(["trade","month"])
   };
 }
 function setDetail(key,html){
@@ -405,6 +458,7 @@ function render(){
   const c=captureData();
   if(!c){setNotice("The selected month could not be found in the service workbook.");return}
   const e=eodData();
+  const p=partsData();
   const elapsed=e?.elapsed||Math.max(1,c.elapsedDays);
   const total=e?.total||31;
   const serviceGp=e?e.serviceActual:c.serviceGp;
@@ -413,8 +467,19 @@ function render(){
   const partsRunRate=elapsed?partsGp*total/elapsed:partsGp;
   const f=v=>elapsed?v*total/elapsed:0;
   const fuelRate=c.fuelOpp?c.fuelSold/c.fuelOpp:0;
+  const acRate=c.acOpp?c.ac/c.acOpp:0;
+  const tyresRate=c.tyresOpp?c.tyres/c.tyresOpp:0;
+  const geometryRate=c.geometryOpp?c.geometry/c.geometryOpp:0;
   const spRate=c.spOpp?c.spSales/c.spOpp:0;
   const partsPlan=e?.partsPlan||0;
+  const addOnsSold=c.tyres+c.geometry+c.ac+c.fuelSold+c.spSales;
+  const salesPerVisit=c.visits?addOnsSold/c.visits:0;
+  const tradePartsPct=p&&p.tradeMonth.target?p.tradeMonth.sold/p.tradeMonth.target:0;
+  const wiperPct=p&&p.wipers.target?p.wipers.sold/p.wipers.target:0;
+  const serviceKitPct=p&&p.serviceKits.target?p.serviceKits.sold/p.serviceKits.target:0;
+  const partsFuelPct=p&&p.fuelTreatments.target?p.fuelTreatments.sold/p.fuelTreatments.target:0;
+  const hybridFilterPct=p&&p.hybridFilters.target?p.hybridFilters.sold/p.hybridFilters.target:0;
+  const topReturns=[...c.advisors].sort((a,b)=>b.returns-a.returns)[0];
 
   const data={
     serviceGpRunRate:serviceRunRate,
@@ -423,20 +488,25 @@ function render(){
     efficiency:c.efficiency,
     partsGpRunRate:partsRunRate,
     partsGp,
-    tyres:c.tyres,
-    geometry:c.geometry,
+    tradePartsPct,serviceKits:p?p.serviceKits.sold:0,wiperPct,
+    partsFuel:p?p.fuelTreatments.sold:0,hybridFilters:p?p.hybridFilters.sold:0,
     averageCrs:c.averageCrs,
+    customerReturns:c.customerReturns,
     citnowWatchRate:c.watchRate,
     servicePlanSales:c.spSales,
-    fuelRate,
-    customerReturns:c.customerReturns
+    salesPerVisit,
+    tyres:c.tyres,fuelSoldCount:c.fuelSold,acSold:c.ac,geometry:c.geometry
   };
   const formats={
     serviceGpRunRate:money,serviceGpActual:money,labourHours:v=>(Number(v)||0).toFixed(1),
     efficiency:pct,
     partsGpRunRate:money,partsGp:money,
-    tyres:num,geometry:num,averageCrs:v=>(Number(v)||0).toFixed(1),
-    citnowWatchRate:pct,servicePlanSales:num,fuelRate:pct,customerReturns:num
+    tradePartsPct:pct,serviceKits:num,wiperPct:pct,partsFuel:num,hybridFilters:num,
+    averageCrs:v=>(Number(v)||0).toFixed(1),
+    customerReturns:num,
+    citnowWatchRate:pct,servicePlanSales:num,
+    salesPerVisit:v=>(Number(v)||0).toFixed(2),
+    tyres:num,fuelSoldCount:num,acSold:num,geometry:num
   };
   Object.entries(formats).forEach(([k,fn])=>document.querySelectorAll(`[data-key="${k}"]`).forEach(el=>el.textContent=fn(data[k])));
 
@@ -446,13 +516,22 @@ function render(){
   setDetail("labourHours",`Sold hours, month to date<span class="forecast">Forecast: ${f(c.soldHours).toFixed(1)} hours</span>`);
   setDetail("partsGpRunRate",`Plan ${money(partsPlan)} · Forecast month-end`);
   setDetail("partsGp",`Month to date<span class="forecast">Forecast: ${money(partsRunRate)}</span>`);
-  setDetail("tyres",`Month to date<span class="forecast">Forecast: ${num(f(c.tyres))}</span>`);
-  setDetail("geometry",`Month to date<span class="forecast">Forecast: ${num(f(c.geometry))}</span>`);
+  setDetail("tradePartsPct",p?`${money(p.tradeMonth.sold)} vs ${money(p.tradeMonth.target)} target`:"Upload the parts workbook");
+  setDetail("serviceKits",p?`${num(p.serviceKits.target)} target<span class="forecast">${pct(serviceKitPct)} of target</span>`:"Upload the parts workbook");
+  setDetail("wiperPct",p?`${num(p.wipers.sold)} sold, ${num(p.wipers.target)} target`:"Upload the parts workbook");
+  setDetail("partsFuel",p?`${num(p.fuelTreatments.target)} target<span class="forecast">${pct(partsFuelPct)} of target</span>`:"Upload the parts workbook");
+  setDetail("hybridFilters",p?`${num(p.hybridFilters.target)} target<span class="forecast">${pct(hybridFilterPct)} of target</span>`:"Upload the parts workbook");
   setDetail("averageCrs",`${c.advisors.filter(a=>a.crs>0).length} advisor score${c.advisors.filter(a=>a.crs>0).length===1?"":"s"} included`);
+  setDetail("customerReturns",`Recorded, month to date<span class="forecast">Forecast: ${num(f(c.customerReturns))}</span>`);
+  const topReturnsEl=document.querySelector('[data-key="topReturnsName"]');
+  if(topReturnsEl)topReturnsEl.textContent=topReturns&&topReturns.returns?`${topReturns.name} (${num(topReturns.returns)})`:"—";
+  setDetail("topReturnsName",topReturns&&topReturns.returns?"Highest this month":"No returns recorded");
   setDetail("citnowWatchRate",`${num(c.watched)} watched from ${num(c.sent)} sent`);
   setDetail("servicePlanSales",`${num(c.spOpp)} opportunities<span class="forecast">${pct(spRate)} conversion</span>`);
-  setDetail("fuelRate",`${num(c.fuelSold)} sold from ${num(c.fuelOpp)} opportunities`);
-  setDetail("customerReturns",`Forecast ${num(f(c.customerReturns))}`);
+  setDetail("tyres",`${num(c.tyresOpp)} opportunities<span class="forecast">${pct(tyresRate)} conversion</span>`);
+  setDetail("fuelSoldCount",`${num(c.fuelOpp)} opportunities<span class="forecast">${pct(fuelRate)} conversion</span>`);
+  setDetail("acSold",`${num(c.acOpp)} opportunities<span class="forecast">${pct(acRate)} conversion</span>`);
+  setDetail("geometry",`${num(c.geometryOpp)} opportunities<span class="forecast">${pct(geometryRate)} conversion</span>`);
   function colourPerformanceCard(id,value,target,higherIsBetter=true){
     const card=document.getElementById(id);
     card.classList.remove("awaiting","performance-green","performance-amber","performance-red");
@@ -469,7 +548,7 @@ function render(){
   const targets=targetsData();
   colourPerformanceCard("serviceHero",serviceRunRate,e?.servicePlan||targets.serviceGp||65665,true);
   colourPerformanceCard("partsHero",partsRunRate,partsPlan||targets.partsGp||28500,true);
-  colourPerformanceCard("crsHero",c.averageCrs,targets.crs||90,true);
+  colourPerformanceCard("performanceHero",salesPerVisit,targets.salesPerVisit||1.1,true);
 
   document.getElementById("advisorRows").innerHTML=c.advisors.map(a=>`<tr>
     <td><strong>${esc(a.name)}</strong></td><td>${num(a.visits)}</td><td>${num(a.ac)}</td><td>${num(a.geometry)}</td>
@@ -489,22 +568,24 @@ function render(){
   const topSp=[...c.advisors].sort((a,b)=>b.spSales-a.spSales)[0];
   const topCrs=[...c.advisors].filter(a=>a.crs>0).sort((a,b)=>b.crs-a.crs)[0];
   const topTech=[...c.technicians].filter(t=>t.efficiency>0).sort((a,b)=>b.efficiency-a.efficiency)[0];
-  const returns=[...c.advisors].sort((a,b)=>b.returns-a.returns)[0];
   document.getElementById("highlightRows").innerHTML=`
     <div><strong>Service-plan leader:</strong> ${topSp&&topSp.spSales?`${esc(topSp.name)} leads with ${num(topSp.spSales)} sales`:"Awaiting data"}</div>
     <div><strong>Best CRS:</strong> ${topCrs?`${esc(topCrs.name)} at ${num(topCrs.crs)}`:"Awaiting data"}</div>
     <div><strong>Top technician:</strong> ${topTech?`${esc(topTech.name)} at ${pct(topTech.efficiency)} efficiency`:"Awaiting data"}</div>
-    <div><strong>Customer returns:</strong> ${returns&&returns.returns?`${esc(returns.name)} has ${num(returns.returns)} returns`:"No returns recorded"}</div>
+    <div><strong>Customer returns:</strong> ${topReturns&&topReturns.returns?`${esc(topReturns.name)} has ${num(topReturns.returns)} returns`:"No returns recorded"}</div>
     <div><strong>Aged VOR:</strong> ${c.agedVor==null?"Not currently tracked":(c.agedVor>0?`${num(c.agedVor)} aged VOR require attention`:"No aged VOR over seven days")}</div>`;
 
   document.querySelectorAll(".month-button").forEach(b=>b.classList.toggle("selected",b.dataset.month===c.sheet));
-  setNotice(e?`Both files loaded. Service GP and Parts GP are from End of Day (${e.sheet}); all other figures are from ${c.sheet}.`: `Service workbook loaded. Upload End of Day for Service GP and Parts GP.`,!!e);
+  const sources=[e?`Service GP/Parts GP from End of Day (${e.sheet})`:null,p?`parts upsell figures from ${p.sheet}`:null].filter(Boolean);
+  setNotice(sources.length?`Service workbook loaded. ${sources.join("; ")}.`:`Service workbook loaded. Upload End of Day for Service GP and Parts GP, and the parts workbook for trade/upsell figures.`,sources.length>0);
 }
 async function loadFile(file,type){
   try{
     const wb=XLSX.read(await file.arrayBuffer(),{type:"array",cellDates:true});
     if(type==="eod"){
       eodWB=wb;const b=document.getElementById("eodButton");b.textContent=file.name;b.classList.add("loaded");
+    }else if(type==="parts"){
+      partsWB=wb;const b=document.getElementById("partsButton");b.textContent=file.name;b.classList.add("loaded");
     }else{
       captureWB=wb;const b=document.getElementById("captureButton");b.textContent=file.name;b.classList.add("loaded");populateMonths();
     }
@@ -513,6 +594,7 @@ async function loadFile(file,type){
 }
 document.getElementById("eodFile").addEventListener("change",e=>e.target.files[0]&&loadFile(e.target.files[0],"eod"));
 document.getElementById("captureFile").addEventListener("change",e=>e.target.files[0]&&loadFile(e.target.files[0],"capture"));
+document.getElementById("partsFile").addEventListener("change",e=>e.target.files[0]&&loadFile(e.target.files[0],"parts"));
 document.getElementById("monthSelect").addEventListener("change",render);
 
 function activateTab(id){
