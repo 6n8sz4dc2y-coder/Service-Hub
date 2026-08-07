@@ -63,11 +63,10 @@ main{max-width:1440px;margin:auto;padding:27px 32px 50px}.section-head{display:f
 .performance-card .value{font-size:31px;margin:10px 0 7px}
 .performance-card .status{margin-top:9px}
 .performance-card .dot{background:#fff}
-.hero-substat{margin-top:14px;padding-top:12px;border-top:1px solid rgba(255,255,255,.25);display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:4px 10px;color:#fff}
-.hero-substat-label{font-size:11px;text-transform:uppercase;letter-spacing:.6px;opacity:.75}
-.hero-substat-value{font-size:20px;font-weight:800}
-.hero-substat-detail{flex-basis:100%;font-size:11px;opacity:.8}
-.hero-substat-detail .forecast{display:block;margin-top:2px;font-weight:800;opacity:1}
+.hero-badge{position:absolute;top:17px;right:19px;text-align:right;line-height:1.2;color:#fff}
+.hero-badge-label{font-size:9px;text-transform:uppercase;letter-spacing:.5px;opacity:.7}
+.hero-badge-value{font-size:20px;font-weight:800;margin:1px 0}
+.hero-badge-detail{font-size:10px;opacity:.85;font-weight:700}
 .mini-grid{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
@@ -146,15 +145,15 @@ main{max-width:1440px;margin:auto;padding:27px 32px 50px}.section-head{display:f
 </div>
 <div class="headline-group">
 <div class="hero-card performance-card awaiting" id="crsHero">
+<div class="hero-badge">
+<div class="hero-badge-label">Returns</div>
+<div class="hero-badge-value" data-key="customerReturns">0</div>
+<div class="hero-badge-detail" data-detail="customerReturns">Forecast —</div>
+</div>
 <div class="label">Average CRS</div>
 <div class="value" data-key="averageCrs">0.0</div>
 <div class="detail" data-detail="averageCrs">Average advisor score</div>
 <div class="status"><span class="dot"></span><span id="crsHeroStatus">Awaiting data</span></div>
-<div class="hero-substat">
-<span class="hero-substat-label">Customer returns</span>
-<span class="hero-substat-value" data-key="customerReturns">0</span>
-<span class="hero-substat-detail" data-detail="customerReturns">Selected month total</span>
-</div>
 </div>
 <div class="mini-grid">
 <div class="kpi mini"><div class="label">CitNOW watched</div><div class="value" data-key="citnowWatchRate">0.0%</div><div class="detail" data-detail="citnowWatchRate">Watched ÷ sent</div></div>
@@ -365,7 +364,7 @@ function render(){
   setDetail("citnowWatchRate",`${num(c.watched)} watched from ${num(c.sent)} sent`);
   setDetail("servicePlanSales",`${num(c.spOpp)} opportunities<span class="forecast">${pct(spRate)} conversion</span>`);
   setDetail("fuelRate",`${num(c.fuelSold)} sold from ${num(c.fuelOpp)} opportunities`);
-  setDetail("customerReturns",`${c.customerReturns===1?"1 return":`${num(c.customerReturns)} returns`} recorded<span class="forecast">Forecast: ${num(f(c.customerReturns))} by month end</span>`);
+  setDetail("customerReturns",`Forecast ${num(f(c.customerReturns))}`);
   function colourPerformanceCard(id,value,target,higherIsBetter=true){
     const card=document.getElementById(id);
     card.classList.remove("awaiting","performance-green","performance-amber","performance-red");
