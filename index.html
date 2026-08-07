@@ -15,6 +15,7 @@ main{max-width:1440px;margin:auto;padding:27px 32px 50px}.section-head{display:f
 .hero-grid{display:grid;grid-template-columns:repeat(3,minmax(220px,1fr));gap:16px;margin-bottom:24px}.hero-card{background:#fff;border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px;min-height:160px;position:relative;overflow:hidden}.hero-card.primary{background:linear-gradient(135deg,var(--navy),var(--blue));color:#fff;border:0}.hero-card:before{content:"";position:absolute;left:0;top:0;width:100%;height:5px;background:linear-gradient(90deg,var(--blue),#7bb1dc)}.hero-card.primary:before{background:rgba(255,255,255,.6)}.label{text-transform:uppercase;font-size:11px;letter-spacing:.8px;color:var(--muted);font-weight:800}.primary .label{color:rgba(255,255,255,.72)}.value{font-size:34px;font-weight:800;color:var(--navy);margin:13px 0 8px}.primary .value{color:#fff}.detail{font-size:12px;color:var(--muted)}.primary .detail{color:rgba(255,255,255,.75)}.status{margin-top:13px;display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:800}.dot{width:9px;height:9px;border-radius:50%}.green{color:var(--green)}.green .dot{background:var(--green)}.amber{color:var(--amber)}.amber .dot{background:var(--amber)}.red{color:var(--red)}.red .dot{background:var(--red)}.primary .status{color:#fff}.primary .dot{background:#fff}
 .secondary-grid{display:grid;grid-template-columns:repeat(4,minmax(170px,1fr));gap:14px;margin-bottom:30px}.kpi{background:#fff;border:1px solid var(--border);border-radius:15px;padding:17px;box-shadow:0 8px 22px rgba(15,39,71,.06)}.kpi .value{font-size:27px;margin:10px 0 7px}.kpi .detail{min-height:42px;line-height:1.45}.kpi .forecast{display:block;margin-top:4px;color:var(--blue);font-weight:700}
 .panel{background:#fff;border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px;margin-bottom:22px}.panel h3{margin:0 0 4px;color:var(--navy)}.panel-intro{margin:0 0 16px;color:var(--muted);font-size:13px}.table-wrap{overflow:auto}table{width:100%;border-collapse:collapse;font-size:13px}th,td{text-align:left;padding:12px 10px;border-bottom:1px solid var(--border);white-space:nowrap}th{background:#f7fafc;color:var(--navy);font-size:11px;text-transform:uppercase;letter-spacing:.55px}.bar-track{width:120px;height:7px;border-radius:10px;background:#e8eef4;overflow:hidden}.bar-fill{height:100%;border-radius:10px;background:var(--blue)}
+.tab-section{display:none}.tab-section.active{display:block}
 .archive-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}.month-button{border:1px solid var(--border);background:#fff;color:var(--navy);padding:14px 10px;border-radius:12px;font-weight:700;cursor:pointer}.month-button:hover,.month-button.selected{background:var(--light);border-color:#9ebfdc;color:var(--blue)}.footer{text-align:center;color:var(--muted);font-size:12px;padding:10px}
 @media(max-width:1000px){.hero-grid{grid-template-columns:repeat(2,1fr)}.secondary-grid{grid-template-columns:repeat(2,1fr)}.archive-grid{grid-template-columns:repeat(4,1fr)}}
 @media(max-width:650px){header,main{padding-left:18px;padding-right:18px}.nav-inner{padding-left:18px;padding-right:18px}.hero-grid,.secondary-grid{grid-template-columns:1fr}.archive-grid{grid-template-columns:repeat(2,1fr)}h1{font-size:25px}}
@@ -62,9 +63,13 @@ main{max-width:1440px;margin:auto;padding:27px 32px 50px}.section-head{display:f
 .performance-card .value{font-size:31px;margin:10px 0 7px}
 .performance-card .status{margin-top:9px}
 .performance-card .dot{background:#fff}
+.hero-badge{position:absolute;top:17px;right:19px;text-align:right;line-height:1.2;color:#fff}
+.hero-badge-label{font-size:9px;text-transform:uppercase;letter-spacing:.5px;opacity:.7}
+.hero-badge-value{font-size:20px;font-weight:800;margin:1px 0}
+.hero-badge-detail{font-size:10px;opacity:.85;font-weight:700}
 .mini-grid{
   display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
+  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
   gap:9px;
   margin-top:9px;
 }
@@ -77,12 +82,10 @@ main{max-width:1440px;margin:auto;padding:27px 32px 50px}.section-head{display:f
 .kpi.mini .value{font-size:22px;margin:7px 0 5px}
 .kpi.mini .detail{font-size:11px;min-height:30px;line-height:1.35}
 .kpi.mini .forecast{margin-top:3px}
+.kpi.mini.placeholder{border-style:dashed;opacity:.65}
+.kpi.mini.placeholder .value{color:var(--muted)}
 @media(max-width:1100px){
   .headline-columns{grid-template-columns:1fr}
-  .mini-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
-}
-@media(max-width:760px){
-  .mini-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 @media(max-width:480px){
   .mini-grid{grid-template-columns:1fr}
@@ -106,9 +109,9 @@ main{max-width:1440px;margin:auto;padding:27px 32px 50px}.section-head{display:f
 <select id="monthSelect"><option value="July 2026">July 2026</option></select>
 </div>
 </div></div></header>
-<nav><div class="nav-inner"><a class="nav-link active" href="#dashboard">Dashboard</a><a class="nav-link" href="#highlights">Highlights</a><a class="nav-link" href="#advisors">Advisors</a><a class="nav-link" href="#technicians">Technicians</a><a class="nav-link" href="#citnow">Weekly CitNOW</a><a class="nav-link" href="#archive">Monthly archive</a></div></nav>
+<nav><div class="nav-inner"><a class="nav-link" href="#dashboard">Dashboard</a><a class="nav-link active" href="#highlights">Highlights</a><a class="nav-link" href="#advisors">Advisors</a><a class="nav-link" href="#technicians">Technicians</a><a class="nav-link" href="#citnow">Weekly CitNOW</a><a class="nav-link" href="#archive">Monthly archive</a></div></nav>
 <main><div class="load-notice" id="loadNotice">Upload the service workbook to populate the dashboard. Upload End of Day for Service GP and Parts GP.</div>
-<section id="dashboard">
+<section class="tab-section" id="dashboard">
 <div class="section-head"><div><h2>Management headlines</h2><p>Only the measures that need immediate management attention.</p></div><div class="period" id="periodLabel">July 2026 · Month to date</div></div>
 
 <div class="headline-columns">
@@ -121,9 +124,9 @@ main{max-width:1440px;margin:auto;padding:27px 32px 50px}.section-head{display:f
 </div>
 <div class="mini-grid">
 <div class="kpi mini"><div class="label">Service GP actual</div><div class="value" data-key="serviceGpActual">£0</div><div class="detail" data-detail="serviceGpActual">Month to date</div></div>
-<div class="kpi mini"><div class="label">Labour sales</div><div class="value" data-key="labourSales">£0</div><div class="detail" data-detail="labourSales">Month to date</div></div>
-<div class="kpi mini"><div class="label">Booked hours</div><div class="value" data-key="bookedHours">0.0</div><div class="detail" data-detail="bookedHours">Month to date</div></div>
+<div class="kpi mini"><div class="label">Labour hours</div><div class="value" data-key="labourHours">0.0</div><div class="detail" data-detail="labourHours">Sold hours, month to date</div></div>
 <div class="kpi mini"><div class="label">Technician efficiency</div><div class="value" data-key="efficiency">0.0%</div><div class="detail">Sold hours ÷ attended hours</div></div>
+<div class="kpi mini placeholder"><div class="label">Red &amp; amber work</div><div class="value">—</div><div class="detail">Awaiting workbook field</div></div>
 </div>
 </div>
 <div class="headline-group">
@@ -135,13 +138,18 @@ main{max-width:1440px;margin:auto;padding:27px 32px 50px}.section-head{display:f
 </div>
 <div class="mini-grid">
 <div class="kpi mini"><div class="label">Parts GP actual</div><div class="value" data-key="partsGp">£0</div><div class="detail" data-detail="partsGp">Month to date</div></div>
-<div class="kpi mini"><div class="label">Parts GP variance</div><div class="value" data-key="partsVariance">£0</div><div class="detail" data-detail="partsVariance">Forecast versus plan</div></div>
+<div class="kpi mini placeholder"><div class="label">Trade parts performance</div><div class="value">—</div><div class="detail">Awaiting workbook field</div></div>
 <div class="kpi mini"><div class="label">Tyres sold</div><div class="value" data-key="tyres">0</div><div class="detail" data-detail="tyres">Month to date</div></div>
 <div class="kpi mini"><div class="label">Geometry sold</div><div class="value" data-key="geometry">0</div><div class="detail" data-detail="geometry">Month to date</div></div>
 </div>
 </div>
 <div class="headline-group">
 <div class="hero-card performance-card awaiting" id="crsHero">
+<div class="hero-badge">
+<div class="hero-badge-label">Returns</div>
+<div class="hero-badge-value" data-key="customerReturns">0</div>
+<div class="hero-badge-detail" data-detail="customerReturns">Forecast —</div>
+</div>
 <div class="label">Average CRS</div>
 <div class="value" data-key="averageCrs">0.0</div>
 <div class="detail" data-detail="averageCrs">Average advisor score</div>
@@ -149,19 +157,19 @@ main{max-width:1440px;margin:auto;padding:27px 32px 50px}.section-head{display:f
 </div>
 <div class="mini-grid">
 <div class="kpi mini"><div class="label">CitNOW watched</div><div class="value" data-key="citnowWatchRate">0.0%</div><div class="detail" data-detail="citnowWatchRate">Watched ÷ sent</div></div>
-<div class="kpi mini"><div class="label">Service plans</div><div class="value" data-key="servicePlanRate">0.0%</div><div class="detail" data-detail="servicePlanRate">Sales ÷ opportunities</div></div>
+<div class="kpi mini"><div class="label">Service plans sold</div><div class="value" data-key="servicePlanSales">0</div><div class="detail" data-detail="servicePlanSales">Sales ÷ opportunities</div></div>
 <div class="kpi mini"><div class="label">Fuel treatment</div><div class="value" data-key="fuelRate">0.0%</div><div class="detail" data-detail="fuelRate">Sales ÷ opportunities</div></div>
-<div class="kpi mini"><div class="label">Customer returns</div><div class="value" data-key="customerReturns">0</div><div class="detail" data-detail="customerReturns">Selected month total</div></div>
+<div class="kpi mini placeholder"><div class="label">Air-con treatment %</div><div class="value">—</div><div class="detail">Awaiting workbook field</div></div>
 </div>
 </div>
 </div>
 
 
 </section>
-<section class="panel" id="highlights"><h3>Highlights &amp; Attention</h3><p class="panel-intro">Automatic commentary from the selected month.</p><div class="highlight-list" id="highlightRows"><div><strong>Service-plan leader:</strong> Abbie leads with 8 sales</div><div><strong>Best CRS:</strong> Abbie at 95</div><div><strong>Top technician:</strong> Neil at 109.4% efficiency</div><div><strong>Customer returns:</strong> Luke has 3 returns</div><div><strong>Aged VOR:</strong> 1 aged VOR requires attention</div></div></section><section class="panel" id="advisors"><h3>Advisor month-to-date activity</h3><p class="panel-intro">Daily entries roll into this selected-month view.</p><div class="table-wrap"><table><thead><tr><th>Advisor</th><th>Retail visits</th><th>ACS</th><th>Geometry</th><th>Tyres</th><th>Fuel sold</th><th>SP opportunities</th><th>SP quotes</th><th>SP sales</th><th>CRS</th><th>Returns</th><th>Activity</th></tr></thead><tbody id="advisorRows"><tr><td><strong>Abbie</strong></td><td>110</td><td>18</td><td>13</td><td>28</td><td>15</td><td>30</td><td>18</td><td>8</td><td>95</td><td>1</td><td><div class="bar-track"><div class="bar-fill" style="width:64%"></div></div></td></tr><tr><td><strong>Rhiannon</strong></td><td>105</td><td>12</td><td>11</td><td>25</td><td>11</td><td>26</td><td>13</td><td>6</td><td>93</td><td>2</td><td><div class="bar-track"><div class="bar-fill" style="width:48%"></div></div></td></tr><tr><td><strong>Luke</strong></td><td>100</td><td>10</td><td>9</td><td>24</td><td>9</td><td>22</td><td>10</td><td>5</td><td>91</td><td>3</td><td><div class="bar-track"><div class="bar-fill" style="width:40%"></div></div></td></tr><tr><td><strong>Amad</strong></td><td>92</td><td>7</td><td>8</td><td>23</td><td>7</td><td>18</td><td>7</td><td>5</td><td>94</td><td>1</td><td><div class="bar-track"><div class="bar-fill" style="width:40%"></div></div></td></tr></tbody></table></div></section>
-<section class="panel" id="technicians"><h3>Technician month-to-date performance</h3><p class="panel-intro">Simplified to attended hours, sold hours, efficiency and labour sales.</p><div class="table-wrap"><table><thead><tr><th>Technician</th><th>Attended hours</th><th>Sold hours</th><th>Efficiency</th><th>Labour sales</th><th>Performance</th></tr></thead><tbody id="technicianRows"><tr><td><strong>Chris</strong></td><td>142</td><td>153</td><td>107.7%</td><td>£16,065</td><td><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div></td></tr><tr><td><strong>Neil</strong></td><td>138</td><td>151</td><td>109.4%</td><td>£15,855</td><td><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div></td></tr><tr><td><strong>Andy</strong></td><td>136</td><td>145</td><td>106.6%</td><td>£15,225</td><td><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div></td></tr><tr><td><strong>Jordan</strong></td><td>130</td><td>128</td><td>98.5%</td><td>£13,440</td><td><div class="bar-track"><div class="bar-fill" style="width:98.5%"></div></div></td></tr><tr><td><strong>Sal</strong></td><td>126</td><td>121</td><td>96.0%</td><td>£12,705</td><td><div class="bar-track"><div class="bar-fill" style="width:96.0%"></div></div></td></tr><tr><td><strong>Jarron</strong></td><td>120</td><td>119</td><td>99.2%</td><td>£12,495</td><td><div class="bar-track"><div class="bar-fill" style="width:99.2%"></div></div></td></tr><tr><td><strong>Grant</strong></td><td>116</td><td>110</td><td>94.8%</td><td>£11,550</td><td><div class="bar-track"><div class="bar-fill" style="width:94.8%"></div></div></td></tr><tr><td><strong>Ste</strong></td><td>110</td><td>108</td><td>98.2%</td><td>£11,340</td><td><div class="bar-track"><div class="bar-fill" style="width:98.2%"></div></div></td></tr><tr><td><strong>Temp 1</strong></td><td>48</td><td>43</td><td>89.6%</td><td>£4,515</td><td><div class="bar-track"><div class="bar-fill" style="width:89.6%"></div></div></td></tr><tr><td><strong>Temp 2</strong></td><td>40</td><td>35</td><td>87.5%</td><td>£3,675</td><td><div class="bar-track"><div class="bar-fill" style="width:87.5%"></div></div></td></tr><tr><td><strong>Temp 3</strong></td><td>24</td><td>20</td><td>83.3%</td><td>£2,100</td><td><div class="bar-track"><div class="bar-fill" style="width:83.3%"></div></div></td></tr></tbody></table></div></section>
-<section class="panel" id="citnow"><h3>Weekly CitNOW by advisor</h3><p class="panel-intro">Individual watch rates are reviewed weekly rather than entered every day.</p><div class="table-wrap"><table><thead><tr><th>Advisor</th><th>Week 1</th><th>Week 2</th><th>Week 3</th><th>Week 4</th><th>Week 5</th><th>Month rate</th></tr></thead><tbody id="citnowRows"><tr><td><strong>Abbie</strong></td><td>84.2%</td><td>83.3%</td><td>85.0%</td><td>83.3%</td><td>82.4%</td><td><strong>83.7%</strong></td></tr><tr><td><strong>Rhiannon</strong></td><td>83.3%</td><td>82.4%</td><td>83.3%</td><td>82.4%</td><td>85.7%</td><td><strong>83.3%</strong></td></tr><tr><td><strong>Luke</strong></td><td>81.3%</td><td>81.3%</td><td>82.4%</td><td>81.3%</td><td>84.6%</td><td><strong>82.1%</strong></td></tr><tr><td><strong>Amad</strong></td><td>80.0%</td><td>85.7%</td><td>81.3%</td><td>80.0%</td><td>84.6%</td><td><strong>82.2%</strong></td></tr></tbody></table></div></section>
-<section class="panel" id="archive"><h3>Monthly archive</h3><p class="panel-intro">Select any month to retain and revisit previous performance.</p><div class="archive-grid" id="archiveButtons"><button class="month-button" type="button">January</button><button class="month-button" type="button">February</button><button class="month-button" type="button">March</button><button class="month-button" type="button">April</button><button class="month-button" type="button">May</button><button class="month-button" type="button">June</button><button class="month-button selected" type="button">July</button><button class="month-button" type="button">August</button><button class="month-button" type="button">September</button><button class="month-button" type="button">October</button><button class="month-button" type="button">November</button><button class="month-button" type="button">December</button></div></section>
+<section class="panel tab-section active" id="highlights"><h3>Highlights &amp; Attention</h3><p class="panel-intro">Automatic commentary from the selected month.</p><div class="highlight-list" id="highlightRows"><div><strong>Service-plan leader:</strong> Abbie leads with 8 sales</div><div><strong>Best CRS:</strong> Abbie at 95</div><div><strong>Top technician:</strong> Neil at 109.4% efficiency</div><div><strong>Customer returns:</strong> Luke has 3 returns</div><div><strong>Aged VOR:</strong> 1 aged VOR requires attention</div></div></section><section class="panel tab-section" id="advisors"><h3>Advisor month-to-date activity</h3><p class="panel-intro">Daily entries roll into this selected-month view.</p><div class="table-wrap"><table><thead><tr><th>Advisor</th><th>Retail visits</th><th>ACS</th><th>Geometry</th><th>Tyres</th><th>Fuel sold</th><th>SP opportunities</th><th>SP quotes</th><th>SP sales</th><th>CRS</th><th>Returns</th><th>Activity</th></tr></thead><tbody id="advisorRows"><tr><td><strong>Abbie</strong></td><td>110</td><td>18</td><td>13</td><td>28</td><td>15</td><td>30</td><td>18</td><td>8</td><td>95</td><td>1</td><td><div class="bar-track"><div class="bar-fill" style="width:64%"></div></div></td></tr><tr><td><strong>Rhiannon</strong></td><td>105</td><td>12</td><td>11</td><td>25</td><td>11</td><td>26</td><td>13</td><td>6</td><td>93</td><td>2</td><td><div class="bar-track"><div class="bar-fill" style="width:48%"></div></div></td></tr><tr><td><strong>Luke</strong></td><td>100</td><td>10</td><td>9</td><td>24</td><td>9</td><td>22</td><td>10</td><td>5</td><td>91</td><td>3</td><td><div class="bar-track"><div class="bar-fill" style="width:40%"></div></div></td></tr><tr><td><strong>Amad</strong></td><td>92</td><td>7</td><td>8</td><td>23</td><td>7</td><td>18</td><td>7</td><td>5</td><td>94</td><td>1</td><td><div class="bar-track"><div class="bar-fill" style="width:40%"></div></div></td></tr></tbody></table></div></section>
+<section class="panel tab-section" id="technicians"><h3>Technician month-to-date performance</h3><p class="panel-intro">Simplified to attended hours, sold hours, efficiency and labour sales.</p><div class="table-wrap"><table><thead><tr><th>Technician</th><th>Attended hours</th><th>Sold hours</th><th>Efficiency</th><th>Labour sales</th><th>Performance</th></tr></thead><tbody id="technicianRows"><tr><td><strong>Chris</strong></td><td>142</td><td>153</td><td>107.7%</td><td>£16,065</td><td><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div></td></tr><tr><td><strong>Neil</strong></td><td>138</td><td>151</td><td>109.4%</td><td>£15,855</td><td><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div></td></tr><tr><td><strong>Andy</strong></td><td>136</td><td>145</td><td>106.6%</td><td>£15,225</td><td><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div></td></tr><tr><td><strong>Jordan</strong></td><td>130</td><td>128</td><td>98.5%</td><td>£13,440</td><td><div class="bar-track"><div class="bar-fill" style="width:98.5%"></div></div></td></tr><tr><td><strong>Sal</strong></td><td>126</td><td>121</td><td>96.0%</td><td>£12,705</td><td><div class="bar-track"><div class="bar-fill" style="width:96.0%"></div></div></td></tr><tr><td><strong>Jarron</strong></td><td>120</td><td>119</td><td>99.2%</td><td>£12,495</td><td><div class="bar-track"><div class="bar-fill" style="width:99.2%"></div></div></td></tr><tr><td><strong>Grant</strong></td><td>116</td><td>110</td><td>94.8%</td><td>£11,550</td><td><div class="bar-track"><div class="bar-fill" style="width:94.8%"></div></div></td></tr><tr><td><strong>Ste</strong></td><td>110</td><td>108</td><td>98.2%</td><td>£11,340</td><td><div class="bar-track"><div class="bar-fill" style="width:98.2%"></div></div></td></tr><tr><td><strong>Temp 1</strong></td><td>48</td><td>43</td><td>89.6%</td><td>£4,515</td><td><div class="bar-track"><div class="bar-fill" style="width:89.6%"></div></div></td></tr><tr><td><strong>Temp 2</strong></td><td>40</td><td>35</td><td>87.5%</td><td>£3,675</td><td><div class="bar-track"><div class="bar-fill" style="width:87.5%"></div></div></td></tr><tr><td><strong>Temp 3</strong></td><td>24</td><td>20</td><td>83.3%</td><td>£2,100</td><td><div class="bar-track"><div class="bar-fill" style="width:83.3%"></div></div></td></tr></tbody></table></div></section>
+<section class="panel tab-section" id="citnow"><h3>Weekly CitNOW by advisor</h3><p class="panel-intro">Individual watch rates are reviewed weekly rather than entered every day.</p><div class="table-wrap"><table><thead><tr><th>Advisor</th><th>Week 1</th><th>Week 2</th><th>Week 3</th><th>Week 4</th><th>Week 5</th><th>Month rate</th></tr></thead><tbody id="citnowRows"><tr><td><strong>Abbie</strong></td><td>84.2%</td><td>83.3%</td><td>85.0%</td><td>83.3%</td><td>82.4%</td><td><strong>83.7%</strong></td></tr><tr><td><strong>Rhiannon</strong></td><td>83.3%</td><td>82.4%</td><td>83.3%</td><td>82.4%</td><td>85.7%</td><td><strong>83.3%</strong></td></tr><tr><td><strong>Luke</strong></td><td>81.3%</td><td>81.3%</td><td>82.4%</td><td>81.3%</td><td>84.6%</td><td><strong>82.1%</strong></td></tr><tr><td><strong>Amad</strong></td><td>80.0%</td><td>85.7%</td><td>81.3%</td><td>80.0%</td><td>84.6%</td><td><strong>82.2%</strong></td></tr></tbody></table></div></section>
+<section class="panel tab-section" id="archive"><h3>Monthly archive</h3><p class="panel-intro">Select any month to retain and revisit previous performance.</p><div class="archive-grid" id="archiveButtons"><button class="month-button" type="button">January</button><button class="month-button" type="button">February</button><button class="month-button" type="button">March</button><button class="month-button" type="button">April</button><button class="month-button" type="button">May</button><button class="month-button" type="button">June</button><button class="month-button selected" type="button">July</button><button class="month-button" type="button">August</button><button class="month-button" type="button">September</button><button class="month-button" type="button">October</button><button class="month-button" type="button">November</button><button class="month-button" type="button">December</button></div></section>
 <div class="footer">Service Dashboard · Single-file GitHub Pages build</div>
 </main>
 <script>
@@ -170,7 +178,7 @@ const money=v=>new Intl.NumberFormat("en-GB",{style:"currency",currency:"GBP",ma
 const pct=v=>`${((Number(v)||0)*100).toFixed(1)}%`;
 const num=v=>new Intl.NumberFormat("en-GB",{maximumFractionDigits:0}).format(Number(v)||0);
 const n=v=>Number(v)||0;
-const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const monthNames=["January","February","March","April","May","June","July","August","September","October","November","December"];
 
 function rows(wb,name){
@@ -242,8 +250,6 @@ function captureData(){
   const advisorSum=k=>advisors.reduce((s,x)=>s+n(x[k]),0);
   const attended=technicians.reduce((s,x)=>s+x.attended,0);
   const sold=technicians.reduce((s,x)=>s+x.sold,0);
-  const labourSales=sumRow(a,12);
-  const bookedHours=sumRow(a,13);
   const validCrs=advisors.map(x=>x.crs).filter(x=>x>0);
   const averageCrs=validCrs.length?validCrs.reduce((s,x)=>s+x,0)/validCrs.length:0;
   const customerReturns=advisorSum("returns");
@@ -262,9 +268,9 @@ function captureData(){
   }
   return {
     sheet,a,advisors,technicians,citnow,
-    serviceGp:sumRow(a,10),partsGp:sumRow(a,11),labourSales,bookedHours,averageCrs,customerReturns,
+    serviceGp:sumRow(a,10),partsGp:sumRow(a,11),averageCrs,customerReturns,
     sent,watched,watchRate:sent?watched/sent:0,
-    efficiency:attended?sold/attended:0,
+    efficiency:attended?sold/attended:0,soldHours:sold,
     tyres:advisorSum("tyres"),geometry:advisorSum("geometry"),
     fuelSold:advisorSum("fuel"),fuelOpp:advisorSum("fuelOpp"),
     spSales:advisorSum("spSales"),spQuotes:advisorSum("spQuotes"),spOpp:advisorSum("spOpp"),
@@ -321,50 +327,44 @@ function render(){
   const fuelRate=c.fuelOpp?c.fuelSold/c.fuelOpp:0;
   const spRate=c.spOpp?c.spSales/c.spOpp:0;
   const partsPlan=e?.partsPlan||0;
-  const partsVariance=partsPlan?partsRunRate-partsPlan:0;
-  const labourSales=e?.labourActual||c.labourSales;
 
   const data={
     serviceGpRunRate:serviceRunRate,
     serviceGpActual:serviceGp,
-    labourSales,
-    bookedHours:c.bookedHours,
+    labourHours:c.soldHours,
     efficiency:c.efficiency,
     partsGpRunRate:partsRunRate,
     partsGp,
-    partsVariance,
     tyres:c.tyres,
     geometry:c.geometry,
     averageCrs:c.averageCrs,
     citnowWatchRate:c.watchRate,
-    servicePlanRate:spRate,
+    servicePlanSales:c.spSales,
     fuelRate,
     customerReturns:c.customerReturns
   };
   const formats={
-    serviceGpRunRate:money,serviceGpActual:money,labourSales:money,
-    bookedHours:v=>(Number(v)||0).toFixed(1),efficiency:pct,
-    partsGpRunRate:money,partsGp:money,partsVariance:money,
+    serviceGpRunRate:money,serviceGpActual:money,labourHours:v=>(Number(v)||0).toFixed(1),
+    efficiency:pct,
+    partsGpRunRate:money,partsGp:money,
     tyres:num,geometry:num,averageCrs:v=>(Number(v)||0).toFixed(1),
-    citnowWatchRate:pct,servicePlanRate:pct,fuelRate:pct,customerReturns:num
+    citnowWatchRate:pct,servicePlanSales:num,fuelRate:pct,customerReturns:num
   };
   Object.entries(formats).forEach(([k,fn])=>document.querySelectorAll(`[data-key="${k}"]`).forEach(el=>el.textContent=fn(data[k])));
 
   document.getElementById("periodLabel").textContent=`${c.sheet} · Month to date`;
   setDetail("serviceGpRunRate",`Plan ${money(e?.servicePlan||0)} · Forecast month-end`);
   setDetail("serviceGpActual",`Month to date<span class="forecast">Forecast: ${money(serviceRunRate)}</span>`);
-  setDetail("labourSales",`Month to date<span class="forecast">Forecast: ${money(f(labourSales))}</span>`);
-  setDetail("bookedHours",`Month to date<span class="forecast">Forecast: ${c.bookedHours?c.bookedHours.toFixed(1):"0.0"} hours entered</span>`);
+  setDetail("labourHours",`Sold hours, month to date<span class="forecast">Forecast: ${f(c.soldHours).toFixed(1)} hours</span>`);
   setDetail("partsGpRunRate",`Plan ${money(partsPlan)} · Forecast month-end`);
   setDetail("partsGp",`Month to date<span class="forecast">Forecast: ${money(partsRunRate)}</span>`);
-  setDetail("partsVariance",`${partsVariance>=0?"Ahead of":"Behind"} forecast plan`);
   setDetail("tyres",`Month to date<span class="forecast">Forecast: ${num(f(c.tyres))}</span>`);
   setDetail("geometry",`Month to date<span class="forecast">Forecast: ${num(f(c.geometry))}</span>`);
   setDetail("averageCrs",`${c.advisors.filter(a=>a.crs>0).length} advisor score${c.advisors.filter(a=>a.crs>0).length===1?"":"s"} included`);
   setDetail("citnowWatchRate",`${num(c.watched)} watched from ${num(c.sent)} sent`);
-  setDetail("servicePlanRate",`${num(c.spSales)} sales · ${num(c.spQuotes)} quotes · ${num(c.spOpp)} opportunities`);
+  setDetail("servicePlanSales",`${num(c.spOpp)} opportunities<span class="forecast">${pct(spRate)} conversion</span>`);
   setDetail("fuelRate",`${num(c.fuelSold)} sold from ${num(c.fuelOpp)} opportunities`);
-  setDetail("customerReturns",`${c.customerReturns===1?"1 return":`${num(c.customerReturns)} returns`} recorded`);
+  setDetail("customerReturns",`Forecast ${num(f(c.customerReturns))}`);
   function colourPerformanceCard(id,value,target,higherIsBetter=true){
     const card=document.getElementById(id);
     card.classList.remove("awaiting","performance-green","performance-amber","performance-red");
@@ -425,5 +425,17 @@ async function loadFile(file,type){
 document.getElementById("eodFile").addEventListener("change",e=>e.target.files[0]&&loadFile(e.target.files[0],"eod"));
 document.getElementById("captureFile").addEventListener("change",e=>e.target.files[0]&&loadFile(e.target.files[0],"capture"));
 document.getElementById("monthSelect").addEventListener("change",render);
+
+function activateTab(id){
+  document.querySelectorAll(".tab-section").forEach(s=>s.classList.toggle("active",s.id===id));
+  document.querySelectorAll(".nav-link").forEach(l=>l.classList.toggle("active",l.getAttribute("href")===`#${id}`));
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+document.querySelectorAll(".nav-link").forEach(link=>{
+  link.addEventListener("click",e=>{
+    e.preventDefault();
+    activateTab(link.getAttribute("href").slice(1));
+  });
+});
 </script></body>
 </html>
